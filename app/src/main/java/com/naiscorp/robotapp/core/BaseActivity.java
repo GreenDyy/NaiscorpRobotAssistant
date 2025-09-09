@@ -3,9 +3,11 @@ package com.naiscorp.robotapp.core;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -33,6 +35,13 @@ public class BaseActivity extends AppCompatActivity {
 
         tvTitle = findViewById(R.id.tvTitle);
         container = findViewById(R.id.container);
+
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTitleClick();
+            }
+        });
     }
 
     @Override
@@ -44,4 +53,10 @@ public class BaseActivity extends AppCompatActivity {
     protected void setHeaderTitle(String title) {
         tvTitle.setText(title);
     }
+    
+    // Method để các Activity con có thể override
+    protected  void onTitleClick() {
+        Toast.makeText(this, "onTitleClick", Toast.LENGTH_SHORT).show();
+    }
+
 }

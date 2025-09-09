@@ -4,13 +4,11 @@ public class HomeCard {
     private String title;
     private String description;
     private int iconResId;
-    private boolean hasBadge;
 
     public HomeCard(String title, String description, int iconResId) {
         this.title = title;
         this.description = description;
         this.iconResId = iconResId;
-        this.hasBadge = false;
     }
 
     // Getters

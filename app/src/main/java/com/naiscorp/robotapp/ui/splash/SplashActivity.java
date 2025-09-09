@@ -25,6 +25,6 @@ public class SplashActivity extends AppCompatActivity {
             Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
             startActivity(intent);
             finish(); // đóng Splash, không cho back lại
-        }, 2000);
+        }, 500);
     }
 }

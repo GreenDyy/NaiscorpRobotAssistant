@@ -3,12 +3,15 @@ package com.naiscorp.robotapp.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.naiscorp.robotapp.R;
-import com.naiscorp.robotapp.adapter.HomeCardAdapter;
+import com.naiscorp.robotapp.adapter.HomeCardRecyclerAdapter;
 import com.naiscorp.robotapp.core.BaseActivity;
 import com.naiscorp.robotapp.model.HomeCard;
 
@@ -17,9 +20,15 @@ import java.util.List;
 
 public class HomeActivity extends BaseActivity {
 
-    private GridView gridViewCards;
-    private HomeCardAdapter cardAdapter;
+    private RecyclerView recyclerViewCards;
+    private HomeCardRecyclerAdapter cardAdapter;
     private List<HomeCard> cardList;
+    private boolean isGrid = true;
+
+
+    //type show
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +38,21 @@ public class HomeActivity extends BaseActivity {
         // Thiết lập header
         setHeaderTitle("Trang chủ");
         
-        // Khởi tạo GridView và data
-        initGridView();
+        // Override onClick cho title từ HomeActivity (sẽ dùng method override thay vì setupTitleClickListener)
+        
+        // Khởi tạo RecyclerView và data
+        initRecyclerView();
         setupCardData();
         setupCardClickListeners();
     }
     
-    private void initGridView() {
-        gridViewCards = findViewById(R.id.gridViewCards);
+    private void initRecyclerView() {
+        recyclerViewCards = findViewById(R.id.recyclerViewCards);
         cardList = new ArrayList<>();
-        cardAdapter = new HomeCardAdapter(this, cardList);
-        gridViewCards.setAdapter(cardAdapter);
+        cardAdapter = new HomeCardRecyclerAdapter(this, cardList);
+
+        recyclerViewCards.setLayoutManager(gridLayoutManager);
+        recyclerViewCards.setAdapter(cardAdapter);
     }
     
     private void setupCardData() {
@@ -55,11 +68,10 @@ public class HomeActivity extends BaseActivity {
     }
     
     private void setupCardClickListeners() {
-        gridViewCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        cardAdapter.setOnItemClickListener(new HomeCardRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HomeCard selectedCard = cardList.get(position);
-                String cardTitle = selectedCard.getTitle().replace("\n", " ");
+            public void onItemClick(int position, HomeCard card) {
+                String cardTitle = card.getTitle().replace("\n", " ");
                 
                 switch (position) {
                     case 0: // Hướng dẫn sử dụng
@@ -91,5 +103,21 @@ public class HomeActivity extends BaseActivity {
             Toast.makeText(this, "Quét QR code để kết nối Robot", Toast.LENGTH_SHORT).show();
             // TODO: Mở camera để quét QR
         });
+    }
+    
+    @Override
+    protected void onTitleClick() {
+        if (isGrid) {
+            recyclerViewCards.setLayoutManager(new LinearLayoutManager(this));
+            isGrid = false;
+            Toast.makeText(this, "Chuyển sang dạng danh sách", Toast.LENGTH_SHORT).show();
+        } else {
+            recyclerViewCards.setLayoutManager(gridLayoutManager);
+            isGrid = true;
+            Toast.makeText(this, "Chuyển sang dạng lưới", Toast.LENGTH_SHORT).show();
+        }
+        // TODO: Mở SettingsActivity
+        // Intent intent = new Intent(this, SettingsActivity.class);
+        // startActivity(intent);
     }
 }

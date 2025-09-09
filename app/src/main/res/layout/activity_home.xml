@@ -17,17 +17,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- GridView for Cards -->
-            <GridView
-                android:id="@+id/gridViewCards"
+            <!-- RecyclerView for Cards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCards"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:numColumns="3"
-                android:horizontalSpacing="8dp"
-                android:verticalSpacing="8dp"
-                android:stretchMode="columnWidth"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:padding="8dp"/>
 
             <!-- QR Code Section -->
             <LinearLayout
