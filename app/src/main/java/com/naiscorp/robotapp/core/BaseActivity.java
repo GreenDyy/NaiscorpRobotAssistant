@@ -1,7 +1,9 @@
 package com.naiscorp.robotapp.core;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -17,10 +19,14 @@ import androidx.core.view.WindowInsetsCompat;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
 
+import java.io.InputStream;
+
 public class BaseActivity extends AppCompatActivity {
 
     private TextView tvTitle;
     private FrameLayout container;
+
+    private ImageView imgLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +38,26 @@ public class BaseActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        tvTitle = findViewById(R.id.tvTitle);
-        container = findViewById(R.id.container);
-
+        initView();
         tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onTitleClick();
             }
         });
+    }
+
+    private void initView() {
+        tvTitle = findViewById(R.id.tvTitle);
+        container = findViewById(R.id.container);
+        imgLogo = findViewById(R.id.imgLogo);
+        try {
+            InputStream is = getAssets().open("icons/icon_plane.png");
+            Drawable drawable = Drawable.createFromStream(is, null);
+            imgLogo.setImageDrawable(drawable);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -56,7 +72,7 @@ public class BaseActivity extends AppCompatActivity {
     
     // Method để các Activity con có thể override
     protected  void onTitleClick() {
-        Toast.makeText(this, "onTitleClick", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "đây là Default", Toast.LENGTH_SHORT).show();
     }
-
 }
+

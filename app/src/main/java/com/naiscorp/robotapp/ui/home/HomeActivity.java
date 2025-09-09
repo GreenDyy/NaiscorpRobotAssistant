@@ -62,7 +62,14 @@ public class HomeActivity extends BaseActivity {
         cardList.add(new HomeCard("Bản đồ\nhướng dẫn", "Bản đồ hướng dẫn", android.R.drawable.ic_menu_mapmode));
         cardList.add(new HomeCard("Kết nối\nRobot", "Kết nối Robot", android.R.drawable.ic_menu_share));
         cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
-        
+        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
+
+        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
+
+        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
+        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
+
+
         // Cập nhật adapter
         cardAdapter.notifyDataSetChanged();
     }
