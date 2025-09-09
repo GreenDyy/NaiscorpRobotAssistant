@@ -18,8 +18,6 @@ import com.naiscorp.robotapp.ui.settings.SettingsActivity;
 public class BaseActivity extends AppCompatActivity {
 
     private TextView tvTitle;
-    private ImageView btnBack;
-    private ImageView btnSettings;
     private FrameLayout container;
 
     @Override
@@ -34,15 +32,7 @@ public class BaseActivity extends AppCompatActivity {
         });
 
         tvTitle = findViewById(R.id.tvTitle);
-        btnBack = findViewById(R.id.btnBack);
-        btnSettings = findViewById(R.id.btnSettings);
         container = findViewById(R.id.container);
-
-        btnBack.setOnClickListener(v -> onBackPressed());
-        btnSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        });
     }
 
     @Override
@@ -53,9 +43,5 @@ public class BaseActivity extends AppCompatActivity {
     // Các hàm tiện ích cho header
     protected void setHeaderTitle(String title) {
         tvTitle.setText(title);
-    }
-
-    protected void showBackButton(boolean show) {
-        btnBack.setVisibility(show ? android.view.View.VISIBLE : android.view.View.GONE);
     }
 }

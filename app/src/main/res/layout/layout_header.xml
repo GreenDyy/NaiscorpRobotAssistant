@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="56dp"
@@ -6,7 +7,8 @@
     android:padding="16dp"
     android:gravity="center_vertical">
 
-    <!-- Logo và tên app -->
+
+    <!-- Logo và tên app (Left) -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,8 +19,8 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_manage"
-            android:tint="@color/textOnPrimary" />
+            android:src="@drawable/ic_menu"
+            app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +32,7 @@
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
-    <!-- Tiêu đề chính -->
+    <!-- Tiêu đề chính (Mid)-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +56,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <!-- Status indicators -->
+    <!-- Status indicators (Right)-->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -63,16 +65,7 @@
         android:gravity="center_vertical|end">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VI"
-            android:textColor="@color/textOnPrimary"
-            android:textSize="12sp"
-            android:background="@drawable/ic_launcher_background"
-            android:padding="4dp"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
+            android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="05:38 PM"
@@ -81,6 +74,7 @@
             android:layout_marginEnd="8dp" />
 
         <TextView
+            android:id="@+id/tvTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="27°C"
@@ -89,27 +83,12 @@
             android:layout_marginEnd="8dp" />
 
         <TextView
+            android:id="@+id/tvPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="69%"
             android:textColor="@color/textOnPrimary"
             android:textSize="12sp"
             android:layout_marginEnd="8dp" />
-
-        <ImageView
-            android:id="@+id/btnSettings"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@android:drawable/ic_menu_preferences"
-            android:tint="@color/textOnPrimary"
-            android:layout_marginEnd="8dp" />
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:tint="@color/textOnPrimary"
-            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

@@ -28,7 +28,6 @@ public class HomeActivity extends BaseActivity {
         
         // Thiết lập header
         setHeaderTitle("Trang chủ");
-        showBackButton(false);
         
         // Khởi tạo GridView và data
         initGridView();
@@ -47,7 +46,7 @@ public class HomeActivity extends BaseActivity {
         // Thêm các card vào list
         cardList.add(new HomeCard("Hướng dẫn\nsử dụng", "Hướng dẫn sử dụng", android.R.drawable.ic_menu_help));
         cardList.add(new HomeCard("Tra cứu\nthông tin", "Tra cứu thông tin", android.R.drawable.ic_menu_search));
-        cardList.add(new HomeCard("Bản đồ\nhướng dẫn", "Bản đồ hướng dẫn", android.R.drawable.ic_menu_mapmode, "DT"));
+        cardList.add(new HomeCard("Bản đồ\nhướng dẫn", "Bản đồ hướng dẫn", android.R.drawable.ic_menu_mapmode));
         cardList.add(new HomeCard("Kết nối\nRobot", "Kết nối Robot", android.R.drawable.ic_menu_share));
         cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
         

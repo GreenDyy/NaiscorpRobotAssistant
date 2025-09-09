@@ -48,7 +48,6 @@ public class HomeCardAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.ivIcon = convertView.findViewById(R.id.ivIcon);
             holder.tvTitle = convertView.findViewById(R.id.tvTitle);
-            holder.tvBadge = convertView.findViewById(R.id.tvBadge);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -61,21 +60,11 @@ public class HomeCardAdapter extends BaseAdapter {
 
         // Set title
         holder.tvTitle.setText(card.getTitle());
-
-        // Set badge
-        if (card.hasBadge()) {
-            holder.tvBadge.setText(card.getBadge());
-            holder.tvBadge.setVisibility(View.VISIBLE);
-        } else {
-            holder.tvBadge.setVisibility(View.GONE);
-        }
-
         return convertView;
     }
 
     static class ViewHolder {
         ImageView ivIcon;
         TextView tvTitle;
-        TextView tvBadge;
     }
 }

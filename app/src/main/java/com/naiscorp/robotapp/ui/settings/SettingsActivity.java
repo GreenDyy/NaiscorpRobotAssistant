@@ -18,7 +18,6 @@ public class SettingsActivity extends BaseActivity {
         
         // Thiết lập header với nút back
         setHeaderTitle("Cài đặt");
-        showBackButton(true);
         
         // Thiết lập click listeners cho các card
         setupCardClickListeners();
