@@ -14,6 +14,7 @@ import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.adapter.HomeCardRecyclerAdapter;
 import com.naiscorp.robotapp.core.BaseActivity;
 import com.naiscorp.robotapp.model.HomeCard;
+import com.naiscorp.robotapp.ui.map.MapActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,7 @@ public class HomeActivity extends BaseActivity {
     private List<HomeCard> cardList;
     private boolean isGrid = true;
 
-
-    //type show
+    // type show
     GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -34,18 +34,19 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        
+
         // Thiết lập header
         setHeaderTitle("Trang chủ");
-        
-        // Override onClick cho title từ HomeActivity (sẽ dùng method override thay vì setupTitleClickListener)
-        
+
+        // Override onClick cho title từ HomeActivity (sẽ dùng method override thay vì
+        // setupTitleClickListener)
+
         // Khởi tạo RecyclerView và data
         initRecyclerView();
         setupCardData();
         setupCardClickListeners();
     }
-    
+
     private void initRecyclerView() {
         recyclerViewCards = findViewById(R.id.recyclerViewCards);
         cardList = new ArrayList<>();
@@ -54,36 +55,30 @@ public class HomeActivity extends BaseActivity {
         recyclerViewCards.setLayoutManager(gridLayoutManager);
         recyclerViewCards.setAdapter(cardAdapter);
     }
-    
+
     private void setupCardData() {
         // Thêm các card vào list
-        cardList.add(new HomeCard("Hướng dẫn\nsử dụng", "Hướng dẫn sử dụng", android.R.drawable.ic_menu_help));
-        cardList.add(new HomeCard("Tra cứu\nthông tin", "Tra cứu thông tin", android.R.drawable.ic_menu_search));
-        cardList.add(new HomeCard("Bản đồ\nhướng dẫn", "Bản đồ hướng dẫn", android.R.drawable.ic_menu_mapmode));
-        cardList.add(new HomeCard("Kết nối\nRobot", "Kết nối Robot", android.R.drawable.ic_menu_share));
-        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
-        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
-
-        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
-
-        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
-        cardList.add(new HomeCard("Câu hỏi\nthường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
-
-
+        cardList.add(new HomeCard("Bản đồ đến quầy Check-in", "", android.R.drawable.ic_menu_mapmode));
+        cardList.add(new HomeCard("Hướng dẫn Check-in", "Tra cứu thông tin", android.R.drawable.ic_menu_search));
+        cardList.add(new HomeCard("Check-in trực tuyến", "Bản đồ hướng dẫn", android.R.drawable.ic_menu_mapmode));
+        cardList.add(new HomeCard("Tra cứu thông tin chuyến bay", "Kết nối Robot", android.R.drawable.ic_menu_search));
+        cardList.add(new HomeCard("Những câu hỏi thường gặp", "Câu hỏi thường gặp", android.R.drawable.ic_menu_info_details));
         // Cập nhật adapter
         cardAdapter.notifyDataSetChanged();
     }
-    
+
     private void setupCardClickListeners() {
         cardAdapter.setOnItemClickListener(new HomeCardRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, HomeCard card) {
                 String cardTitle = card.getTitle().replace("\n", " ");
-                
+                Intent intent;
                 switch (position) {
-                    case 0: // Hướng dẫn sử dụng
+                    case 0:
                         Toast.makeText(HomeActivity.this, "Mở " + cardTitle, Toast.LENGTH_SHORT).show();
-                        // TODO: Mở màn hình hướng dẫn
+                        intent = new Intent(HomeActivity.this, MapActivity.class);
+                        intent.putExtra("title", cardTitle);
+                        startActivity(intent);
                         break;
                     case 1: // Tra cứu thông tin
                         Toast.makeText(HomeActivity.this, "Mở " + cardTitle, Toast.LENGTH_SHORT).show();
@@ -104,27 +99,22 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-        
+
         // QR Code section
         findViewById(R.id.qrSection).setOnClickListener(v -> {
             Toast.makeText(this, "Quét QR code để kết nối Robot", Toast.LENGTH_SHORT).show();
             // TODO: Mở camera để quét QR
         });
     }
-    
+
     @Override
     protected void onTitleClick() {
         if (isGrid) {
             recyclerViewCards.setLayoutManager(new LinearLayoutManager(this));
             isGrid = false;
-            Toast.makeText(this, "Chuyển sang dạng danh sách", Toast.LENGTH_SHORT).show();
         } else {
             recyclerViewCards.setLayoutManager(gridLayoutManager);
             isGrid = true;
-            Toast.makeText(this, "Chuyển sang dạng lưới", Toast.LENGTH_SHORT).show();
         }
-        // TODO: Mở SettingsActivity
-        // Intent intent = new Intent(this, SettingsActivity.class);
-        // startActivity(intent);
     }
 }
