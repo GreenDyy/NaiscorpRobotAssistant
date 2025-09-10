@@ -1,78 +1,44 @@
 package com.naiscorp.robotapp.ui.dialog;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.content.Context;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.naiscorp.robotapp.R;
 
-public class ConfirmDialog extends DialogFragment {
+public class ConfirmDialogHelper {
+    public static void show(Context context,
+                            String title,
+                            String message,
+                            ConfirmDialogCallback callback) {
 
-    private String title;
-    private String message;
-    private int iconRes;
-    private ConfirmListener listener;
+        Dialog dialog = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.setContentView(R.layout.dialog_confirm);
 
-    // Interface callback cho Activity/Fragment gọi dialog
-    public interface ConfirmListener {
-        void onConfirmed();
-        void onCancelled();
-    }
+        // Nếu muốn full width
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialog.getWindow().setDimAmount(0.5f); // nền mờ mờ
+        }
+        TextView tvDialogTitle = dialog.findViewById(R.id.tvDialogTitle);
+        tvDialogTitle.setText(title);
+         TextView tvDialogMessage = dialog.findViewById(R.id.tvDialogMessage);
+        tvDialogMessage.setText(message);
 
-    public ConfirmDialog(String title, String message, int iconRes, ConfirmListener listener) {
-        this.title = title;
-        this.message = message;
-        this.iconRes = iconRes;
-        this.listener = listener;
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        // Tạo dialog không có title mặc định
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_confirm, container, false);
-
-        ImageView icon = view.findViewById(R.id.dialog_icon);
-        TextView tvTitle = view.findViewById(R.id.dialog_title);
-        TextView tvMessage = view.findViewById(R.id.dialog_message);
-        Button btnPositive = view.findViewById(R.id.btn_positive);
-        Button btnNegative = view.findViewById(R.id.btn_negative);
-
-        // Gán dữ liệu
-        icon.setImageResource(iconRes);
-        tvTitle.setText(title);
-        tvMessage.setText(message);
-
-        btnPositive.setOnClickListener(v -> {
-            if (listener != null) listener.onConfirmed();
-            dismiss();
+        dialog.findViewById(R.id.btnPositive).setOnClickListener(v -> {
+            if (callback != null) callback.onConfirmed();
+            dialog.dismiss();
         });
 
-        btnNegative.setOnClickListener(v -> {
-            if (listener != null) listener.onCancelled();
-            dismiss();
+        dialog.findViewById(R.id.btnNegative).setOnClickListener(v -> {
+            if (callback != null) callback.onCancelled();
+            dialog.dismiss();
         });
 
-        return view;
+        dialog.show();
     }
 }

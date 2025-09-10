@@ -8,6 +8,7 @@
     <color name="colorPrimary">#4CAF50</color> <!-- xanh lá tươi -->
     <color name="colorPrimaryDark">#388E3C</color> <!-- xanh lá đậm (status bar) -->
     <color name="colorAccent">#8BC34A</color> <!-- xanh lá nhạt (highlight) -->
+    <color name="primary_color">#4CAF50</color> <!-- xanh lá tươi -->
 
     <!-- Background & Surface -->
     <color name="background">#F5F5F5</color> <!-- xám nhạt -->

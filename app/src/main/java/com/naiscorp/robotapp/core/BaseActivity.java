@@ -85,6 +85,12 @@ public class BaseActivity extends AppCompatActivity {
             imgLogo.setImageDrawable(drawable);
         } catch (Exception e) {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
+        } try {
+            InputStream is = getAssets().open("icons/icon_plane.png");
+            Drawable drawable = Drawable.createFromStream(is, null);
+            imgLogo.setImageDrawable(drawable);
+        } catch (Exception e) {
+            Log.e(TAG, Objects.requireNonNull(e.getMessage()));
         }
     }
 
