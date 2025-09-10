@@ -75,7 +75,6 @@ public class HomeActivity extends BaseActivity {
                 Intent intent;
                 switch (position) {
                     case 0:
-                        Toast.makeText(HomeActivity.this, "Mở " + cardTitle, Toast.LENGTH_SHORT).show();
                         intent = new Intent(HomeActivity.this, MapActivity.class);
                         intent.putExtra("title", cardTitle);
                         startActivity(intent);
@@ -116,5 +115,10 @@ public class HomeActivity extends BaseActivity {
             recyclerViewCards.setLayoutManager(gridLayoutManager);
             isGrid = true;
         }
+    }
+
+    @Override
+    protected void onBtnLeftClick() {
+        //Không làm gì cả
     }
 }

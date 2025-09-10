@@ -2,7 +2,7 @@
     android:shape="rectangle">
 
     <!-- Nền trắng -->
-    <solid android:color="@android:color/white"/>
+    <solid android:color="@android:color/transparent"/>
 
     <!-- Viền đỏ -->
     <stroke
