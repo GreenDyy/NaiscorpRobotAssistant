@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NaiscorpRobotAssistant">
         <activity
+            android:name=".ui.checkin.CheckInActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.map.MapActivity"
             android:exported="false" />
         <activity
@@ -25,10 +28,10 @@
         </activity>
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

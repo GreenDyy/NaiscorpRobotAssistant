@@ -14,6 +14,7 @@ import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.adapter.HomeCardRecyclerAdapter;
 import com.naiscorp.robotapp.core.BaseActivity;
 import com.naiscorp.robotapp.model.HomeCard;
+import com.naiscorp.robotapp.ui.checkin.CheckInActivity;
 import com.naiscorp.robotapp.ui.map.MapActivity;
 
 import java.util.ArrayList;
@@ -79,9 +80,10 @@ public class HomeActivity extends BaseActivity {
                         intent.putExtra("title", cardTitle);
                         startActivity(intent);
                         break;
-                    case 1: // Tra cứu thông tin
-                        Toast.makeText(HomeActivity.this, "Mở " + cardTitle, Toast.LENGTH_SHORT).show();
-                        // TODO: Mở màn hình tra cứu
+                    case 1:
+                        intent = new Intent(HomeActivity.this, CheckInActivity.class);
+                        intent.putExtra("title", cardTitle);
+                        startActivity(intent);
                         break;
                     case 2: // Bản đồ hướng dẫn
                         Toast.makeText(HomeActivity.this, "Mở " + cardTitle, Toast.LENGTH_SHORT).show();

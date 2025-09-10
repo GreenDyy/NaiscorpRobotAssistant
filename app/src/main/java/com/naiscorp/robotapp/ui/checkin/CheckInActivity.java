@@ -1,8 +1,6 @@
-package com.naiscorp.robotapp.ui.map;
+package com.naiscorp.robotapp.ui.checkin;
 
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,25 +11,19 @@ import androidx.core.view.WindowInsetsCompat;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.core.BaseActivity;
 
-public class MapActivity extends BaseActivity {
-    private TextView tvTest;
+public class CheckInActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_check_in);
         initView();
     }
 
     private void initView() {
-        setHeaderTitle("Bản đồ đến quầy Check-in");
-        setSubTitle("Guiding Map");
-        showRightButton();
+        setHeaderTitle("Hướng dẫn Check-in");
+        setSubTitle("Check-in instructions");
         showLeftButton();
-    }
-
-    @Override
-    protected void onBtnRightClick() {
-        Toast.makeText(this, "map ne ku", Toast.LENGTH_SHORT).show();
+        showRightButton();
     }
 }

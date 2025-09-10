@@ -34,8 +34,7 @@ import java.util.Objects;
 
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
-
-    private TextView tvTitle, tvTime, tvTemperature, tvPin;
+    private TextView tvSubTitle, tvTitle, tvTime, tvTemperature, tvPin;
     private Button btnLeft, btnRight;
     private FrameLayout container;
 
@@ -67,6 +66,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private void initView() {
         tvTitle = findViewById(R.id.tvTitle);
+        tvSubTitle = findViewById(R.id.tvSubTitle);
         container = findViewById(R.id.container);
         imgLogo = findViewById(R.id.imgLogo);
         tvTime = findViewById(R.id.tvTime);
@@ -166,6 +166,10 @@ public class BaseActivity extends AppCompatActivity {
     // Các hàm tiện ích cho header
     protected void setHeaderTitle(String title) {
         tvTitle.setText(title);
+    }
+
+    protected void setSubTitle(String text) {
+        tvSubTitle.setText(text);
     }
 
     // Method để các Activity con có thể override
