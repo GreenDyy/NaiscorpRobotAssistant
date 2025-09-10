@@ -41,33 +41,13 @@
 
         <Button
             android:id="@+id/btnLeft"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="Quay lại"
-            android:textSize="16sp"
-            android:background="@drawable/btn_outline"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
+            style="@style/ButtonOutlineStyle"
+            android:text="Quay lại" />
 
         <Button
             android:id="@+id/btnRight"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Xác nhận"
-            android:background="@drawable/btn_solid"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
+            style="@style/ButtonSolidStyle"
+            android:text="Xác nhận" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
