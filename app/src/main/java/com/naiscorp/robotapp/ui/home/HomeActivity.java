@@ -2,6 +2,7 @@ package com.naiscorp.robotapp.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,11 +17,13 @@ import com.naiscorp.robotapp.core.BaseActivity;
 import com.naiscorp.robotapp.model.HomeCard;
 import com.naiscorp.robotapp.ui.checkin.CheckInActivity;
 import com.naiscorp.robotapp.ui.map.MapActivity;
+import com.naiscorp.robotapp.utils.ApiHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends BaseActivity {
+    private static final String TAG = "HomeActivity";
 
     private RecyclerView recyclerViewCards;
     private HomeCardRecyclerAdapter cardAdapter;
@@ -46,12 +49,15 @@ public class HomeActivity extends BaseActivity {
         initRecyclerView();
         setupCardData();
         setupCardClickListeners();
+        
+        // Test API
+        testApiCall();
     }
 
     private void initRecyclerView() {
         recyclerViewCards = findViewById(R.id.recyclerViewCards);
         cardList = new ArrayList<>();
-        cardAdapter = new HomeCardRecyclerAdapter(this, cardList);
+        cardAdapter = new HomeCardRecyclerAdapter(cardList);
 
         recyclerViewCards.setLayoutManager(gridLayoutManager);
         recyclerViewCards.setAdapter(cardAdapter);
@@ -97,6 +103,8 @@ public class HomeActivity extends BaseActivity {
                         Toast.makeText(HomeActivity.this, "Mở " + cardTitle, Toast.LENGTH_SHORT).show();
                         // TODO: Mở màn hình FAQ
                         break;
+                    default:
+                        break;
                 }
             }
         });
@@ -122,5 +130,30 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onBtnLeftClick() {
         //Không làm gì cả
+    }
+    
+    private void testApiCall() {
+        Log.d(TAG, "Bắt đầu test API call...");
+        
+        // Sử dụng JSONPlaceholder API mẫu để test
+        String testUrl = "https://jsonplaceholder.typicode.com/posts/1";
+        
+        ApiHelper.get(testUrl, new ApiHelper.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d(TAG, "API Success - Response: " + response);
+                runOnUiThread(() -> {
+                    Toast.makeText(HomeActivity.this, "API call thành công! Xem LogCat", Toast.LENGTH_LONG).show();
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.e(TAG, "API Error: " + e.getMessage(), e);
+                runOnUiThread(() -> {
+                    Toast.makeText(HomeActivity.this, "API call thất bại: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+            }
+        });
     }
 }

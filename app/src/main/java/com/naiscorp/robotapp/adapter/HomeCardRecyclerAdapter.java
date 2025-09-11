@@ -16,7 +16,6 @@ import com.naiscorp.robotapp.model.HomeCard;
 import java.util.List;
 
 public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<HomeCardRecyclerAdapter.ViewHolder> {
-    private Context context;
     private List<HomeCard> cardList;
     private OnItemClickListener onItemClickListener;
 
@@ -24,8 +23,7 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<HomeCardRecycl
         void onItemClick(int position, HomeCard card);
     }
 
-    public HomeCardRecyclerAdapter(Context context, List<HomeCard> cardList) {
-        this.context = context;
+    public HomeCardRecyclerAdapter( List<HomeCard> cardList) {
         this.cardList = cardList;
     }
 
@@ -36,7 +34,7 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<HomeCardRecycl
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_home_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_card, parent, false);
         return new ViewHolder(view);
     }
 
@@ -67,7 +65,7 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<HomeCardRecycl
         ImageView ivIcon;
         TextView tvTitle;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ivIcon = itemView.findViewById(R.id.ivIcon);
             tvTitle = itemView.findViewById(R.id.tvTitle);
