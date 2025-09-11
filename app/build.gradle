@@ -6,6 +6,20 @@ android {
     namespace 'com.naiscorp.robotapp'
     compileSdk 34
 
+    flavorDimensions "domain"
+
+    productFlavors {
+        bank {
+            dimension "domain"
+        }
+        airport {
+            dimension "domain"
+        }
+        government {
+            dimension "domain"
+        }
+    }
+
     defaultConfig {
         applicationId "com.naiscorp.robotapp"
         minSdk 21
