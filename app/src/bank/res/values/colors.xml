@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Màu cơ bản -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-
-    <!-- Primary: xanh lá chủ đạo -->
-    <color name="colorPrimary">#4CAF50</color> <!-- xanh lá tươi -->
-    <color name="colorPrimaryDark">#388E3C</color> <!-- xanh lá đậm (status bar) -->
-    <color name="colorAccent">#8BC34A</color> <!-- xanh lá nhạt (highlight) -->
-    <color name="primary_color">#4CAF50</color> <!-- xanh lá tươi -->
-
-    <!-- Background & Surface -->
-    <color name="background">#F5F5F5</color> <!-- xám nhạt -->
-    <color name="surface">#FFFFFF</color> <!-- nền trắng card -->
-
-    <!-- Text -->
-    <color name="textPrimary">#212121</color> <!-- đen đậm -->
-    <color name="textSecondary">#757575</color> <!-- xám trung tính -->
-    <color name="textOnPrimary">#FFFFFF</color> <!-- chữ trên nền xanh -->
-
-    <!-- Trạng thái -->
-    <color name="success">#4CAF50</color>
-    <color name="warning">#FFC107</color>
-    <color name="error">#F44336</color>
-    <color name="info">#2196F3</color>
-
-    <!-- Neutral -->
-    <color name="divider">#BDBDBD</color>
-    <color name="disabled">#9E9E9E</color>
+    <!-- Bank Theme Colors - Blue -->
+    <color name="colorPrimary">#1976D2</color>
+    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="accent_color">#FF4081</color>
+    <color name="background_color">#F5F5F5</color>
+    <color name="surface_color">#FFFFFF</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="divider_color">#BDBDBD</color>
+    
+    <!-- Bank specific colors -->
+    <color name="bank_blue">#1976D2</color>
+    <color name="bank_blue_light">#42A5F5</color>
+    <color name="bank_blue_dark">#0D47A1</color>
 </resources>

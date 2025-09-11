@@ -1,4 +1,4 @@
-resources>
+<resources>
     <string name="app_name">Airport Robot Assistant</string>
     <string name="welcome_message">Chào mừng đến với Trợ lý Robot Sân bay</string>
     <string name="partner_name">Sân bay</string>
