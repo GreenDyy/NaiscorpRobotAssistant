@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Naiscorp Robot Assistant</string>
+    <string name="drawer_open">Mở menu</string>
+    <string name="drawer_close">Đóng menu</string>
 </resources>

@@ -131,6 +131,34 @@ public class HomeActivity extends BaseActivity {
     protected void onBtnLeftClick() {
         //Không làm gì cả
     }
+
+    // Override drawer methods để tùy chỉnh hành vi
+    @Override
+    protected void onNavHomeClick() {
+        // Đóng drawer và hiển thị thông báo
+        closeDrawer();
+        Toast.makeText(this, "Bạn đang ở trang chủ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onNavSettingClick() {
+        // Mở SettingsActivity
+        closeDrawer();
+        Intent intent = new Intent(this, CheckInActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDrawerOpened() {
+        // Có thể thêm logic khi drawer mở
+        Log.d(TAG, "Drawer đã mở");
+    }
+
+    @Override
+    protected void onDrawerClosed() {
+        // Có thể thêm logic khi drawer đóng
+        Log.d(TAG, "Drawer đã đóng");
+    }
     
     private void testApiCall() {
         Log.d(TAG, "Bắt đầu test API call...");
@@ -143,6 +171,7 @@ public class HomeActivity extends BaseActivity {
             public void onSuccess(String response) {
                 Log.d(TAG, "API Success - Response: " + response);
                 runOnUiThread(() -> {
+                    setSubTitle("API call thành công!");
                     Toast.makeText(HomeActivity.this, "API call thành công! Xem LogCat", Toast.LENGTH_LONG).show();
                 });
             }

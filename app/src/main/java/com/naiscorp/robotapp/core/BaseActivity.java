@@ -11,18 +11,25 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
 
@@ -46,6 +53,13 @@ public class BaseActivity extends AppCompatActivity {
 
     private BroadcastReceiver batteryReceiver;
 
+    //menu
+    protected DrawerLayout drawerLayout;
+    protected NavigationView navigationView;
+    protected Toolbar toolbar;
+    protected ActionBarDrawerToggle drawerToggle;
+    protected ImageView imgMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +75,7 @@ public class BaseActivity extends AppCompatActivity {
         initListeners();
         initTimeDisplay();
         initBatteryDisplay();
+        initDrawer();
 
     }
 
@@ -78,6 +93,11 @@ public class BaseActivity extends AppCompatActivity {
         // mặc định ẩn 2 nút này đi nhe
         hideLeftButton();
         hideRightButton();
+        
+        // Drawer components
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        imgMenu = findViewById(R.id.imgMemu);
 
         try {
             InputStream is = getAssets().open("icons/icon_plane.png");
@@ -108,6 +128,11 @@ public class BaseActivity extends AppCompatActivity {
 
         btnRight.setOnClickListener(v->{
             onBtnRightClick();
+        });
+
+        // Drawer menu click listener
+        imgMenu.setOnClickListener(v -> {
+            toggleDrawer();
         });
 
     }
@@ -164,6 +189,35 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    private void initDrawer() {
+        if (drawerLayout != null && navigationView != null) {
+            // Thiết lập ActionBarDrawerToggle
+            drawerToggle = new ActionBarDrawerToggle(
+                    this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                }
+            };
+
+            drawerLayout.addDrawerListener(drawerToggle);
+            drawerToggle.syncState();
+
+            // Thiết lập NavigationView listener
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    return onNavigationItemSelected(item);
+                }
+            });
+        }
+    }
+
     @Override
     public void setContentView(int layoutResID) {
         LayoutInflater.from(this).inflate(layoutResID, container, true);
@@ -215,6 +269,71 @@ public class BaseActivity extends AppCompatActivity {
         btnLeft.setText(text);
     }
 
+    // Drawer methods
+    protected void toggleDrawer() {
+        if (drawerLayout != null) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        }
+    }
+
+    protected void openDrawer() {
+        if (drawerLayout != null) {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    protected void closeDrawer() {
+        if (drawerLayout != null) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    protected boolean isDrawerOpen() {
+        return drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START);
+    }
+
+    // Drawer event handlers - có thể override trong các Activity con
+    protected void onDrawerOpened() {
+        // Override trong Activity con nếu cần
+    }
+
+    protected void onDrawerClosed() {
+        // Override trong Activity con nếu cần
+    }
+
+    // Navigation menu handler
+    protected boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        
+        if (id == R.id.nav_home) {
+            onNavHomeClick();
+            return true;
+        } else if (id == R.id.nav_setting) {
+            onNavSettingClick();
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Navigation menu click handlers - có thể override trong các Activity con
+    protected void onNavHomeClick() {
+        // Mặc định: đóng drawer và hiển thị thông báo
+        closeDrawer();
+        Toast.makeText(this, "Trang chủ", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void onNavSettingClick() {
+        // Mặc định: mở SettingsActivity
+        closeDrawer();
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -250,4 +369,3 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 }
-
