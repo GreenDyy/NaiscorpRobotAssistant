@@ -79,10 +79,11 @@
         <Spinner
             android:id="@+id/spinnerLanguage"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/spinner_language_bg"
-            android:minWidth="60dp" />
+            android:minWidth="80dp"
+            android:padding="4dp" />
 
         <TextView
             android:id="@+id/tvTime"

@@ -148,7 +148,6 @@ public class HomeActivity extends BaseActivity {
             public void onSuccess(String response) {
                 Log.d(TAG, "API Success - Response: " + response);
                 runOnUiThread(() -> {
-                    setSubTitle("API call thành công!");
                     Toast.makeText(HomeActivity.this, "API call thành công! Xem LogCat", Toast.LENGTH_LONG).show();
                 });
             }

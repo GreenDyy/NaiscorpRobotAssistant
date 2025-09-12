@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:padding="8dp">
+    android:gravity="center"
+    android:padding="6dp">
 
+    <!-- Globe Icon -->
     <ImageView
-        android:id="@+id/imgFlag"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:scaleType="centerCrop" />
+        android:id="@+id/imgGlobe"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="6dp"
+        android:src="@drawable/ic_globe"
+        android:scaleType="centerInside" />
 
+    <!-- Language Code -->
     <TextView
-        android:id="@+id/tvLanguage"
-        android:layout_width="0dp"
+        android:id="@+id/tvLanguageCode"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Vietnam"
-        android:textColor="@color/textOnPrimary"
-        android:textSize="14sp" />
+        android:text="VI"
+
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="4dp" />
+
+    <!-- Dropdown Arrow -->
+    <ImageView
+        android:id="@+id/imgDropdown"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/ic_dropdown_arrow"
+        android:scaleType="centerInside" />
 
 </LinearLayout>

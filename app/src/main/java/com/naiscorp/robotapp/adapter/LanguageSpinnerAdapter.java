@@ -51,11 +51,13 @@ public class LanguageSpinnerAdapter extends BaseAdapter {
         
         LanguageItem item = languageItems.get(position);
         
-        ImageView imgFlag = view.findViewById(R.id.imgFlag);
-        TextView tvLanguage = view.findViewById(R.id.tvLanguage);
+        ImageView imgGlobe = view.findViewById(R.id.imgGlobe);
+        TextView tvLanguageCode = view.findViewById(R.id.tvLanguageCode);
+        ImageView imgDropdown = view.findViewById(R.id.imgDropdown);
         
-        imgFlag.setImageResource(item.getFlagResId());
-        tvLanguage.setText(item.getLanguageName());
+        imgGlobe.setImageResource(item.getFlagResId());
+        tvLanguageCode.setText(item.getLanguageCode().toUpperCase());
+        imgDropdown.setImageResource(R.drawable.ic_dropdown_arrow); // Sử dụng dropdown arrow icon
         
         return view;
     }
@@ -64,16 +66,17 @@ public class LanguageSpinnerAdapter extends BaseAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = inflater.inflate(R.layout.language_spinner_dropdown_item, parent, false);
+            view = inflater.inflate(R.layout.language_dropdown_item, parent, false);
         }
         
         LanguageItem item = languageItems.get(position);
         
-        ImageView imgFlag = view.findViewById(R.id.imgFlag);
-        TextView tvLanguage = view.findViewById(R.id.tvLanguage);
+        ImageView imgGlobe = view.findViewById(R.id.imgGlobe);
+        TextView tvLanguageName = view.findViewById(R.id.tvLanguageName);
         
-        imgFlag.setImageResource(item.getFlagResId());
-        tvLanguage.setText(item.getLanguageName());
+        // Sử dụng globe icon màu đen cho dropdown
+        imgGlobe.setImageResource(R.drawable.ic_globe_black);
+        tvLanguageName.setText(item.getLanguageName());
         
         return view;
     }

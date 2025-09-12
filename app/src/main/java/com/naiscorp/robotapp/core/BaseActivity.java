@@ -223,6 +223,9 @@ public class BaseActivity extends AppCompatActivity {
                 languageAdapter = new LanguageSpinnerAdapter(this, languages);
                 spinnerLanguage.setAdapter(languageAdapter);
                 
+                // Thiết lập background cho dropdown
+                spinnerLanguage.setPopupBackgroundResource(R.drawable.dropdown_background);
+                
                 // Thiết lập ngôn ngữ hiện tại
                 String currentLanguage = LanguageUtils.getSavedLanguage(this);
                 int position = LanguageUtils.getLanguagePosition(currentLanguage);

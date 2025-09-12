@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.adapter.LanguageSpinnerAdapter;
 
 /**
@@ -31,14 +32,14 @@ public class LanguageUtils {
         languages.add(new LanguageSpinnerAdapter.LanguageItem(
             "vi", 
             "Vietnam", 
-            android.R.drawable.ic_menu_day // Tạm thời dùng icon có sẵn
+            R.drawable.ic_globe // Sử dụng globe icon
         ));
         
         // English
         languages.add(new LanguageSpinnerAdapter.LanguageItem(
             "en", 
             "English", 
-            android.R.drawable.ic_menu_search // Tạm thời dùng icon có sẵn
+            R.drawable.ic_globe // Sử dụng globe icon
         ));
         
         return languages;

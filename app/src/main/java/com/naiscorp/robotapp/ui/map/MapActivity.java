@@ -39,6 +39,8 @@ public class MapActivity extends BaseActivity {
     }
 
     private void initView() {
+        setHeaderTitle(getResources().getString(R.string.map_screen_name));
+        setSubTitle(getResources().getString(R.string.map_screen_subtitle));
         tvDes = findViewById(R.id.tvDes);
         tvDes.setText("Bạn có thể tìm thấy quầy thủ tục của Vietjet tại sảnh A1-A5 ở tầng 1F");
         imgMap = findViewById(R.id.imgMap);
@@ -51,9 +53,6 @@ public class MapActivity extends BaseActivity {
                 showZoomDialog();
             }
         });
-
-        setHeaderTitle("Bản đồ đến quầy Check-in");
-        setSubTitle("Guiding Map");
         showRightButton();
         showLeftButton();
     }
