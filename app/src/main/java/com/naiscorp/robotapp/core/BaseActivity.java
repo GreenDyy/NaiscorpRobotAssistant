@@ -31,6 +31,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.ui.checkin.CheckInActivity;
+import com.naiscorp.robotapp.ui.home.HomeActivity;
+import com.naiscorp.robotapp.ui.playground.PlayGroundActivity;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
 import com.naiscorp.robotapp.utils.AssetUtils;
 
@@ -58,7 +60,7 @@ public class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     protected ImageView imgMenu;
-    
+
     // Avatar assistant components
     protected ImageView imgAvatar;
     protected TextView tvName, tvStatus;
@@ -101,7 +103,7 @@ public class BaseActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         imgMenu = findViewById(R.id.imgMemu);
-        
+
         // Avatar assistant components
         imgAvatar = navigationView.getHeaderView(0).findViewById(R.id.imgAvatarRobot);
         tvName = navigationView.getHeaderView(0).findViewById(R.id.tvName);
@@ -114,14 +116,14 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
         }
-        
+
         // Thiết lập avatar assistant
         try {
             AssetUtils.loadImageFromAssets(BaseActivity.this, imgAvatar, "icons/icon_plane.png");
         } catch (Exception e) {
             Log.e(TAG, "Error loading assistant avatar: " + Objects.requireNonNull(e.getMessage()));
         }
-        
+
         // Thiết lập thông tin assistant
         if (tvStatus != null) {
             tvStatus.setText("Đang hoạt động");
@@ -148,7 +150,7 @@ public class BaseActivity extends AppCompatActivity {
         imgMenu.setOnClickListener(v -> {
             toggleDrawer();
         });
-        
+
         // Avatar assistant click listener
         if (imgAvatar != null) {
             imgAvatar.setOnClickListener(v -> {
@@ -217,14 +219,21 @@ public class BaseActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     int id = item.getItemId();
+                    Intent intent;
                     switch (id) {
                         case R.id.nav_home:
                             closeDrawer();
-
+                            intent = new Intent(BaseActivity.this, HomeActivity.class);
+                            startActivity(intent);
                             break;
                         case R.id.nav_setting:
                             closeDrawer();
-                            Intent intent = new Intent(BaseActivity.this, CheckInActivity.class);
+                            intent = new Intent(BaseActivity.this, SettingsActivity.class);
+                            startActivity(intent);
+                            break;
+                        case R.id.nav_playground:
+                            closeDrawer();
+                            intent = new Intent(BaseActivity.this, PlayGroundActivity.class);
                             startActivity(intent);
                             break;
                         default:

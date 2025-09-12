@@ -11,7 +11,12 @@
        <item
            android:id="@+id/nav_setting"
            android:title="Cài đặt"
-           android:icon="@drawable/ic_menu"
+           android:icon="@drawable/ic_close"
+           />
+       <item
+           android:id="@+id/nav_playground"
+           android:title="Vùng test"
+           android:icon="@drawable/ic_playground"
            />
    </group>
 </menu>

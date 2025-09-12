@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NaiscorpRobotAssistant">
         <activity
+            android:name=".ui.playground.PlayGroundActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.checkin.CheckInActivity"
             android:exported="false" />
         <activity
