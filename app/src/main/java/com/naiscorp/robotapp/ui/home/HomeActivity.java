@@ -39,6 +39,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         // Thiết lập header
         setHeaderTitle(getResources().getString(R.string.home_screen_name));
 

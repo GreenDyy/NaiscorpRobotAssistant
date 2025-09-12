@@ -14,9 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -39,6 +42,8 @@ import com.naiscorp.robotapp.ui.playground.PlayGroundActivity;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
 import com.naiscorp.robotapp.ui.demo.BreadcrumbTestActivity;
 import com.naiscorp.robotapp.utils.AssetUtils;
+import com.naiscorp.robotapp.utils.LanguageUtils;
+import com.naiscorp.robotapp.adapter.LanguageSpinnerAdapter;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -74,6 +79,10 @@ public class BaseActivity extends AppCompatActivity {
     private TextView tvBreadcrumb;
     private List<String> breadcrumbList = new ArrayList<>();
     private OnBackPressedCallback onBackPressedCallback;
+    
+    // Language components
+    private Spinner spinnerLanguage;
+    private LanguageSpinnerAdapter languageAdapter;
 
 
     @Override
@@ -104,12 +113,15 @@ public class BaseActivity extends AppCompatActivity {
 
         // Bắt đầu với màn Home
         if (breadcrumbList.isEmpty()) {
-            breadcrumbList.add("Home");
+            breadcrumbList.add(getResources().getString(R.string.home_screen_name));
         }
         updateBreadcrumb();
         
         // Thiết lập OnBackPressedCallback
         setupOnBackPressedCallback();
+        
+        // Thiết lập Language Spinner
+        setupLanguageSpinner();
 
     }
 
@@ -197,6 +209,63 @@ public class BaseActivity extends AppCompatActivity {
         
         // Đăng ký callback
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    }
+
+    // Thiết lập Language Spinner
+    private void setupLanguageSpinner() {
+        try {
+            spinnerLanguage = findViewById(R.id.spinnerLanguage);
+            if (spinnerLanguage != null) {
+                // Tạo danh sách ngôn ngữ
+                List<LanguageSpinnerAdapter.LanguageItem> languages = LanguageUtils.getAvailableLanguages();
+                
+                // Tạo adapter
+                languageAdapter = new LanguageSpinnerAdapter(this, languages);
+                spinnerLanguage.setAdapter(languageAdapter);
+                
+                // Thiết lập ngôn ngữ hiện tại
+                String currentLanguage = LanguageUtils.getSavedLanguage(this);
+                int position = LanguageUtils.getLanguagePosition(currentLanguage);
+                spinnerLanguage.setSelection(position);
+                
+                // Thiết lập listener
+                spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        LanguageSpinnerAdapter.LanguageItem selectedLanguage = languages.get(position);
+                        onLanguageSelected(selectedLanguage.getLanguageCode());
+                    }
+                    
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // Không làm gì
+                    }
+                });
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error setting up language spinner", e);
+        }
+    }
+
+    // Xử lý khi chọn ngôn ngữ
+    protected void onLanguageSelected(String languageCode) {
+        try {
+            String currentLanguage = LanguageUtils.getSavedLanguage(this);
+            if (!currentLanguage.equals(languageCode)) {
+                // Lưu ngôn ngữ mới
+                LanguageUtils.saveLanguage(this, languageCode);
+                
+                // Áp dụng ngôn ngữ
+                LanguageUtils.applyLanguage(this, languageCode);
+                
+                // Restart activity để áp dụng ngôn ngữ mới
+                recreate();
+                
+                Log.d(TAG, "Language changed to: " + languageCode);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error changing language", e);
+        }
     }
 
     // Navigate về màn hình trước đó dựa trên breadcrumb
