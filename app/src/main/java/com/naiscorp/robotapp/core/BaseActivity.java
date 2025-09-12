@@ -21,7 +21,6 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
@@ -57,7 +56,6 @@ public class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     protected Toolbar toolbar;
-    protected ActionBarDrawerToggle drawerToggle;
     protected ImageView imgMenu;
 
 
@@ -93,7 +91,7 @@ public class BaseActivity extends AppCompatActivity {
         // mặc định ẩn 2 nút này đi nhe
         hideLeftButton();
         hideRightButton();
-        
+
         // Drawer components
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -105,7 +103,8 @@ public class BaseActivity extends AppCompatActivity {
             imgLogo.setImageDrawable(drawable);
         } catch (Exception e) {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
-        } try {
+        }
+        try {
             InputStream is = getAssets().open("icons/icon_plane.png");
             Drawable drawable = Drawable.createFromStream(is, null);
             imgLogo.setImageDrawable(drawable);
@@ -122,11 +121,11 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
 
-        btnLeft.setOnClickListener(v->{
+        btnLeft.setOnClickListener(v -> {
             onBtnLeftClick();
         });
 
-        btnRight.setOnClickListener(v->{
+        btnRight.setOnClickListener(v -> {
             onBtnRightClick();
         });
 
@@ -191,28 +190,11 @@ public class BaseActivity extends AppCompatActivity {
 
     private void initDrawer() {
         if (drawerLayout != null && navigationView != null) {
-            // Thiết lập ActionBarDrawerToggle
-            drawerToggle = new ActionBarDrawerToggle(
-                    this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                }
-
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    super.onDrawerClosed(drawerView);
-                }
-            };
-
-            drawerLayout.addDrawerListener(drawerToggle);
-            drawerToggle.syncState();
-
             // Thiết lập NavigationView listener
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    return onNavigationItemSelected(item);
+                    return BaseActivity.this.onNavigationItemSelected(item);
                 }
             });
         }
@@ -308,7 +290,7 @@ public class BaseActivity extends AppCompatActivity {
     // Navigation menu handler
     protected boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        
+
         if (id == R.id.nav_home) {
             onNavHomeClick();
             return true;
@@ -316,7 +298,7 @@ public class BaseActivity extends AppCompatActivity {
             onNavSettingClick();
             return true;
         }
-        
+
         return false;
     }
 
