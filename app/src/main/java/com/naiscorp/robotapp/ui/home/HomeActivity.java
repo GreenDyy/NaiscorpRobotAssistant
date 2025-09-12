@@ -84,11 +84,15 @@ public class HomeActivity extends BaseActivity {
                     case 0:
                         intent = new Intent(HomeActivity.this, MapActivity.class);
                         intent.putExtra("title", cardTitle);
+                        goToScreen("Bản đồ");
+                        intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
                         startActivity(intent);
                         break;
                     case 1:
                         intent = new Intent(HomeActivity.this, CheckInActivity.class);
                         intent.putExtra("title", cardTitle);
+                        goToScreen("Check-in");
+                        intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
                         startActivity(intent);
                         break;
                     case 2: // Bản đồ hướng dẫn

@@ -9,6 +9,7 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,13 +33,17 @@ import com.google.android.material.navigation.NavigationView;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.ui.checkin.CheckInActivity;
 import com.naiscorp.robotapp.ui.home.HomeActivity;
+import com.naiscorp.robotapp.ui.map.MapActivity;
 import com.naiscorp.robotapp.ui.playground.PlayGroundActivity;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
+import com.naiscorp.robotapp.ui.demo.BreadcrumbTestActivity;
 import com.naiscorp.robotapp.utils.AssetUtils;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -65,6 +70,9 @@ public class BaseActivity extends AppCompatActivity {
     protected ImageView imgAvatar;
     protected TextView tvName, tvStatus;
 
+    private TextView tvBreadcrumb;
+    private List<String> breadcrumbList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +90,138 @@ public class BaseActivity extends AppCompatActivity {
         initBatteryDisplay();
         initDrawer();
 
+        //breadcrumb
+        tvBreadcrumb = findViewById(R.id.tvBreadcrumb);
+        
+        // Thiết lập click listener cho breadcrumb
+        if (tvBreadcrumb != null) {
+            tvBreadcrumb.setOnClickListener(v -> {
+                onBreadcrumbClick();
+            });
+        }
+
+        // Bắt đầu với màn Home
+        if (breadcrumbList.isEmpty()) {
+            breadcrumbList.add("Home");
+        }
+        updateBreadcrumb();
+
+    }
+
+    private void updateBreadcrumb() {
+        if (tvBreadcrumb != null) {
+            String breadcrumb = TextUtils.join(" > ", breadcrumbList);
+            tvBreadcrumb.setText(breadcrumb);
+        }
+    }
+
+    // Thêm màn hình mới vào breadcrumb
+    public void goToScreen(String screenName) {
+        logBreadcrumb("goToScreen - Before adding: " + screenName);
+        // Không thêm duplicate
+        if (breadcrumbList.isEmpty() || !breadcrumbList.get(breadcrumbList.size() - 1).equals(screenName)) {
+            breadcrumbList.add(screenName);
+            updateBreadcrumb();
+            logBreadcrumb("goToScreen - After adding: " + screenName);
+        } else {
+            Log.d(TAG, "goToScreen - Duplicate screen, not adding: " + screenName);
+        }
+    }
+
+    // Lấy breadcrumb list để truyền qua Intent
+    public List<String> getBreadcrumbList() {
+        return new ArrayList<>(breadcrumbList);
+    }
+
+    // Thiết lập breadcrumb từ Intent
+    public void setBreadcrumbFromIntent(Intent intent) {
+        if (intent != null && intent.hasExtra("breadcrumb")) {
+            String[] breadcrumbArray = intent.getStringArrayExtra("breadcrumb");
+            if (breadcrumbArray != null) {
+                breadcrumbList.clear();
+                for (String item : breadcrumbArray) {
+                    breadcrumbList.add(item);
+                }
+                updateBreadcrumb();
+            }
+        }
+    }
+
+    // Reset breadcrumb về Home
+    public void resetBreadcrumb() {
+        breadcrumbList.clear();
+        breadcrumbList.add("Home");
+        updateBreadcrumb();
+    }
+
+    // Xử lý click vào breadcrumb
+    protected void onBreadcrumbClick() {
+        // Mặc định: quay về Home
+        if (breadcrumbList.size() > 1) {
+            resetBreadcrumb();
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    // Method tiện ích để debug breadcrumb
+    protected void logBreadcrumb(String action) {
+        Log.d(TAG, action + " - Breadcrumb: " + TextUtils.join(" > ", breadcrumbList));
+    }
+
+    @Override
+    public void onBackPressed() {
+        logBreadcrumb("onBackPressed - Before");
+        if (breadcrumbList.size() > 1) {
+            // Xóa màn hình hiện tại khỏi breadcrumb
+            breadcrumbList.remove(breadcrumbList.size() - 1);
+            updateBreadcrumb();
+            logBreadcrumb("onBackPressed - After remove");
+            
+            // Navigate về màn hình trước đó
+            navigateToPreviousScreen();
+        } else {
+            super.onBackPressed(); // thoát app
+        }
+    }
+
+    // Navigate về màn hình trước đó dựa trên breadcrumb
+    private void navigateToPreviousScreen() {
+        if (breadcrumbList.size() > 0) {
+            String previousScreen = breadcrumbList.get(breadcrumbList.size() - 1);
+            Intent intent = null;
+            
+            switch (previousScreen) {
+                case "Home":
+                    intent = new Intent(this, HomeActivity.class);
+                    break;
+                case "Cài đặt":
+                    intent = new Intent(this, SettingsActivity.class);
+                    break;
+                case "Vùng test":
+                    intent = new Intent(this, PlayGroundActivity.class);
+                    break;
+                case "Bản đồ":
+                    intent = new Intent(this, MapActivity.class);
+                    break;
+                case "Check-in":
+                    intent = new Intent(this, CheckInActivity.class);
+                    break;
+                case "Breadcrumb Test":
+                    intent = new Intent(this, BreadcrumbTestActivity.class);
+                    break;
+                default:
+                    // Nếu không biết màn hình nào, quay về Home
+                    intent = new Intent(this, HomeActivity.class);
+                    break;
+            }
+            
+            if (intent != null) {
+                intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
+                startActivity(intent);
+                finish(); // Đóng màn hình hiện tại
+            }
+        }
     }
 
     private void initView() {
@@ -109,25 +249,8 @@ public class BaseActivity extends AppCompatActivity {
         tvName = navigationView.getHeaderView(0).findViewById(R.id.tvName);
         tvStatus = navigationView.getHeaderView(0).findViewById(R.id.tvStatus);
 
-        try {
-            InputStream is = getAssets().open("icons/icon_plane.png");
-            Drawable drawable = Drawable.createFromStream(is, null);
-            imgLogo.setImageDrawable(drawable);
-        } catch (Exception e) {
-            Log.e(TAG, Objects.requireNonNull(e.getMessage()));
-        }
-
-        // Thiết lập avatar assistant
-        try {
-            AssetUtils.loadImageFromAssets(BaseActivity.this, imgAvatar, "icons/icon_plane.png");
-        } catch (Exception e) {
-            Log.e(TAG, "Error loading assistant avatar: " + Objects.requireNonNull(e.getMessage()));
-        }
-
-        // Thiết lập thông tin assistant
-        if (tvStatus != null) {
-            tvStatus.setText("Đang hoạt động");
-        }
+        AssetUtils.loadImageFromAssets(BaseActivity.this, imgLogo, "icons/icon_plane.png");
+        AssetUtils.loadImageFromAssets(BaseActivity.this, imgAvatar, "icons/icon_plane.png");
     }
 
     private void initListeners() {
@@ -225,6 +348,8 @@ public class BaseActivity extends AppCompatActivity {
                             closeDrawer();
                             // Kiểm tra xem có đang ở HomeActivity không
                             if (!(BaseActivity.this instanceof HomeActivity)) {
+                                // Reset breadcrumb về Home
+                                resetBreadcrumb();
                                 intent = new Intent(BaseActivity.this, HomeActivity.class);
                                 startActivity(intent);
                             }
@@ -233,7 +358,9 @@ public class BaseActivity extends AppCompatActivity {
                             closeDrawer();
                             // Kiểm tra xem có đang ở SettingsActivity không
                             if (!(BaseActivity.this instanceof SettingsActivity)) {
+                                goToScreen("Cài đặt");
                                 intent = new Intent(BaseActivity.this, SettingsActivity.class);
+                                intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
                                 startActivity(intent);
                             }
                             break;
@@ -241,7 +368,19 @@ public class BaseActivity extends AppCompatActivity {
                             closeDrawer();
                             // Kiểm tra xem có đang ở PlayGroundActivity không
                             if (!(BaseActivity.this instanceof PlayGroundActivity)) {
+                                goToScreen("Vùng test");
                                 intent = new Intent(BaseActivity.this, PlayGroundActivity.class);
+                                intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
+                                startActivity(intent);
+                            }
+                            break;
+                        case R.id.nav_breadcrumb_test:
+                            closeDrawer();
+                            // Kiểm tra xem có đang ở BreadcrumbTestActivity không
+                            if (!(BaseActivity.this instanceof BreadcrumbTestActivity)) {
+                                goToScreen("Breadcrumb Test");
+                                intent = new Intent(BaseActivity.this, BreadcrumbTestActivity.class);
+                                intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
                                 startActivity(intent);
                             }
                             break;
@@ -274,7 +413,20 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void onBtnLeftClick() {
-        finish();
+        logBreadcrumb("onBtnLeftClick - Before");
+        // Sử dụng breadcrumb navigation thay vì finish()
+        if (breadcrumbList.size() > 1) {
+            // Xóa màn hình hiện tại khỏi breadcrumb
+            breadcrumbList.remove(breadcrumbList.size() - 1);
+            updateBreadcrumb();
+            logBreadcrumb("onBtnLeftClick - After remove");
+            
+            // Navigate về màn hình trước đó
+            navigateToPreviousScreen();
+        } else {
+            // Nếu chỉ có Home, thì finish
+            finish();
+        }
     }
 
     protected void onBtnRightClick() {

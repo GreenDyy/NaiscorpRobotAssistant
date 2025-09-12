@@ -33,6 +33,10 @@ public class CheckInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
+        
+        // Nhận breadcrumb từ Intent
+        setBreadcrumbFromIntent(getIntent());
+        
         initView();
         initRecyclerView();
         setupRecycleViewData();

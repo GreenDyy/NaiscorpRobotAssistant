@@ -16,6 +16,9 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         
+        // Nhận breadcrumb từ Intent
+        setBreadcrumbFromIntent(getIntent());
+        
         // Thiết lập header với nút back
         setHeaderTitle("Cài đặt");
         

@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,6 +20,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <!-- Include toolbar breadcrumb -->
+        <include
+            android:id="@+id/toolbarBreadcrumb"
+            layout="@layout/toolbar_breadcrumb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layoutHeader"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
         <!-- Content -->
         <FrameLayout
             android:id="@+id/container"
@@ -26,7 +40,7 @@
             app:layout_constraintBottom_toTopOf="@id/buttonLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
+            app:layout_constraintTop_toBottomOf="@id/toolbarBreadcrumb" />
 
         <!-- Footer buttons -->
         <LinearLayout

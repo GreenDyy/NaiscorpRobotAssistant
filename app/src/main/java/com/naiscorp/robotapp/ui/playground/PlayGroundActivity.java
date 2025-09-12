@@ -18,6 +18,9 @@ public class PlayGroundActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_ground);
 
+        // Nhận breadcrumb từ Intent
+        setBreadcrumbFromIntent(getIntent());
+
         //setUpBase
         setHeaderTitle("Vùng test");
         setSubTitle("Testt");
