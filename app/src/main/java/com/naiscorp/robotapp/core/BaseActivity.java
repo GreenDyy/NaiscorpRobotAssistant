@@ -223,18 +223,27 @@ public class BaseActivity extends AppCompatActivity {
                     switch (id) {
                         case R.id.nav_home:
                             closeDrawer();
-                            intent = new Intent(BaseActivity.this, HomeActivity.class);
-                            startActivity(intent);
+                            // Kiểm tra xem có đang ở HomeActivity không
+                            if (!(BaseActivity.this instanceof HomeActivity)) {
+                                intent = new Intent(BaseActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                            }
                             break;
                         case R.id.nav_setting:
                             closeDrawer();
-                            intent = new Intent(BaseActivity.this, SettingsActivity.class);
-                            startActivity(intent);
+                            // Kiểm tra xem có đang ở SettingsActivity không
+                            if (!(BaseActivity.this instanceof SettingsActivity)) {
+                                intent = new Intent(BaseActivity.this, SettingsActivity.class);
+                                startActivity(intent);
+                            }
                             break;
                         case R.id.nav_playground:
                             closeDrawer();
-                            intent = new Intent(BaseActivity.this, PlayGroundActivity.class);
-                            startActivity(intent);
+                            // Kiểm tra xem có đang ở PlayGroundActivity không
+                            if (!(BaseActivity.this instanceof PlayGroundActivity)) {
+                                intent = new Intent(BaseActivity.this, PlayGroundActivity.class);
+                                startActivity(intent);
+                            }
                             break;
                         default:
                             break;
