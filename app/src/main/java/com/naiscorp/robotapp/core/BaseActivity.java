@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.ui.checkin.CheckInActivity;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
+import com.naiscorp.robotapp.utils.AssetUtils;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -57,6 +58,10 @@ public class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     protected ImageView imgMenu;
+    
+    // Avatar assistant components
+    protected ImageView imgAvatar;
+    protected TextView tvName, tvStatus;
 
 
     @Override
@@ -96,6 +101,11 @@ public class BaseActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         imgMenu = findViewById(R.id.imgMemu);
+        
+        // Avatar assistant components
+        imgAvatar = navigationView.getHeaderView(0).findViewById(R.id.imgAvatarRobot);
+        tvName = navigationView.getHeaderView(0).findViewById(R.id.tvName);
+        tvStatus = navigationView.getHeaderView(0).findViewById(R.id.tvStatus);
 
         try {
             InputStream is = getAssets().open("icons/icon_plane.png");
@@ -104,12 +114,17 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
         }
+        
+        // Thiết lập avatar assistant
         try {
-            InputStream is = getAssets().open("icons/icon_plane.png");
-            Drawable drawable = Drawable.createFromStream(is, null);
-            imgLogo.setImageDrawable(drawable);
+            AssetUtils.loadImageFromAssets(BaseActivity.this, imgAvatar, "icons/icon_plane.png");
         } catch (Exception e) {
-            Log.e(TAG, Objects.requireNonNull(e.getMessage()));
+            Log.e(TAG, "Error loading assistant avatar: " + Objects.requireNonNull(e.getMessage()));
+        }
+        
+        // Thiết lập thông tin assistant
+        if (tvStatus != null) {
+            tvStatus.setText("Đang hoạt động");
         }
     }
 
@@ -133,6 +148,13 @@ public class BaseActivity extends AppCompatActivity {
         imgMenu.setOnClickListener(v -> {
             toggleDrawer();
         });
+        
+        // Avatar assistant click listener
+        if (imgAvatar != null) {
+            imgAvatar.setOnClickListener(v -> {
+                onAvatarClick();
+            });
+        }
 
     }
 
@@ -263,6 +285,30 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void setLeftButtonText(String text) {
         btnLeft.setText(text);
+    }
+
+    // Avatar assistant methods
+    protected void setAssistantName(String name) {
+        if (tvName != null) {
+            tvName.setText(name);
+        }
+    }
+
+    protected void setAssistantStatus(String status) {
+        if (tvStatus != null) {
+            tvStatus.setText(status);
+        }
+    }
+
+    protected void setAssistantAvatar(Drawable drawable) {
+        if (imgAvatar != null) {
+            imgAvatar.setImageDrawable(drawable);
+        }
+    }
+
+    protected void onAvatarClick() {
+        // Mặc định: hiển thị thông tin assistant
+        Toast.makeText(this, "Assistant - Sẵn sàng hỗ trợ!", Toast.LENGTH_SHORT).show();
     }
 
     // Drawer methods
