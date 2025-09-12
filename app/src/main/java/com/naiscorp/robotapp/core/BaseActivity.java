@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -72,6 +73,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private TextView tvBreadcrumb;
     private List<String> breadcrumbList = new ArrayList<>();
+    private OnBackPressedCallback onBackPressedCallback;
 
 
     @Override
@@ -105,6 +107,9 @@ public class BaseActivity extends AppCompatActivity {
             breadcrumbList.add("Home");
         }
         updateBreadcrumb();
+        
+        // Thiết lập OnBackPressedCallback
+        setupOnBackPressedCallback();
 
     }
 
@@ -169,20 +174,29 @@ public class BaseActivity extends AppCompatActivity {
         Log.d(TAG, action + " - Breadcrumb: " + TextUtils.join(" > ", breadcrumbList));
     }
 
-    @Override
-    public void onBackPressed() {
-        logBreadcrumb("onBackPressed - Before");
-        if (breadcrumbList.size() > 1) {
-            // Xóa màn hình hiện tại khỏi breadcrumb
-            breadcrumbList.remove(breadcrumbList.size() - 1);
-            updateBreadcrumb();
-            logBreadcrumb("onBackPressed - After remove");
-            
-            // Navigate về màn hình trước đó
-            navigateToPreviousScreen();
-        } else {
-            super.onBackPressed(); // thoát app
-        }
+    // Thiết lập OnBackPressedCallback để thay thế onBackPressed() deprecated
+    private void setupOnBackPressedCallback() {
+        onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                logBreadcrumb("OnBackPressedCallback - Before");
+                if (breadcrumbList.size() > 1) {
+                    // Xóa màn hình hiện tại khỏi breadcrumb
+                    breadcrumbList.remove(breadcrumbList.size() - 1);
+                    updateBreadcrumb();
+                    logBreadcrumb("OnBackPressedCallback - After remove");
+                    
+                    // Navigate về màn hình trước đó
+                    navigateToPreviousScreen();
+                } else {
+                    // Nếu chỉ có Home, thoát app
+                    finish();
+                }
+            }
+        };
+        
+        // Đăng ký callback
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     // Navigate về màn hình trước đó dựa trên breadcrumb
@@ -518,6 +532,10 @@ public class BaseActivity extends AppCompatActivity {
             } catch (IllegalArgumentException e) {
                 Log.e(TAG, "Error unregistering battery receiver: " + e.getMessage());
             }
+        }
+        // Cleanup OnBackPressedCallback
+        if (onBackPressedCallback != null) {
+            onBackPressedCallback.remove();
         }
     }
 
