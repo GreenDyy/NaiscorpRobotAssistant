@@ -40,7 +40,7 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
 
         // Thiết lập header
-        setHeaderTitle("Trang chủ");
+        setHeaderTitle(getResources().getString(R.string.home_screen_name));
 
         // Override onClick cho title từ HomeActivity (sẽ dùng method override thay vì
         // setupTitleClickListener)

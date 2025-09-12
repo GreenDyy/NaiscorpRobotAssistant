@@ -2,4 +2,12 @@
     <string name="app_name">Naiscorp Robot Assistant</string>
     <string name="drawer_open">Mở menu</string>
     <string name="drawer_close">Đóng menu</string>
+
+    //SCREEN NAME
+    <string name="home_screen_name">Trang chủ</string>
+    <string name="playground_screen_name">Vùng Test</string>
+    <string name="setting_screen_name">Cài đặt/string </string>
+    <string name="checkin_screen_name">Hướng dẫn Check-in</string>
+
+
 </resources>
