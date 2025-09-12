@@ -43,8 +43,8 @@ public class CheckInActivity extends BaseActivity {
     }
 
     private void initView() {
-        setHeaderTitle("Hướng dẫn Check-in");
-        setSubTitle("Check-in instructions");
+        setHeaderTitle(getResources().getString(R.string.checkin_screen_name));
+        setSubTitle(getResources().getString(R.string.checkin_screen_subtitle));
         showLeftButton();
         showRightButton();
     }

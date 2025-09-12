@@ -1,17 +1,16 @@
 <resources>
     <string name="app_name">Naiscorp Robot Assistant</string>
-    <string name="drawer_open">Mở menu</string>
-    <string name="drawer_close">Đóng menu</string>
 
-    <!-- Screen Names (Vietnamese) -->
-    <string name="home_screen_name">Trang chủ</string>
-    <string name="playground_screen_name">Vùng Test</string>
-    <string name="setting_screen_name">Cài đặt</string>
-    <string name="checkin_screen_name">Hướng dẫn Check-in</string>
-    <string name="map_screen_name">Bản đồ đến quầy Check-in</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="home_screen_name">Home</string>
+    <string name="playground_screen_name">Playground</string>
+    <string name="setting_screen_name">Settings</string>
+    <string name="checkin_screen_name">Check-in Instructions</string>
+    <string name="map_screen_name">Map to Check-in Counter</string>
     <string name="breadcrumb_test_screen_name">Breadcrumb Test</string>
 
-    <!-- Screen Subtitles (English) -->
     <string name="home_screen_subtitle">Homepage</string>
     <string name="playground_screen_subtitle">Playground</string>
     <string name="setting_screen_subtitle">Settings</string>
