@@ -30,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.naiscorp.robotapp.R;
+import com.naiscorp.robotapp.ui.checkin.CheckInActivity;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
 
 import java.io.InputStream;
@@ -55,7 +56,6 @@ public class BaseActivity extends AppCompatActivity {
     //menu
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
-    protected Toolbar toolbar;
     protected ImageView imgMenu;
 
 
@@ -194,7 +194,21 @@ public class BaseActivity extends AppCompatActivity {
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    return BaseActivity.this.onNavigationItemSelected(item);
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.nav_home:
+                            closeDrawer();
+
+                            break;
+                        case R.id.nav_setting:
+                            closeDrawer();
+                            Intent intent = new Intent(BaseActivity.this, CheckInActivity.class);
+                            startActivity(intent);
+                            break;
+                        default:
+                            break;
+                    }
+                    return true;
                 }
             });
         }
@@ -272,48 +286,6 @@ public class BaseActivity extends AppCompatActivity {
         if (drawerLayout != null) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-    }
-
-    protected boolean isDrawerOpen() {
-        return drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START);
-    }
-
-    // Drawer event handlers - có thể override trong các Activity con
-    protected void onDrawerOpened() {
-        // Override trong Activity con nếu cần
-    }
-
-    protected void onDrawerClosed() {
-        // Override trong Activity con nếu cần
-    }
-
-    // Navigation menu handler
-    protected boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            onNavHomeClick();
-            return true;
-        } else if (id == R.id.nav_setting) {
-            onNavSettingClick();
-            return true;
-        }
-
-        return false;
-    }
-
-    // Navigation menu click handlers - có thể override trong các Activity con
-    protected void onNavHomeClick() {
-        // Mặc định: đóng drawer và hiển thị thông báo
-        closeDrawer();
-        Toast.makeText(this, "Trang chủ", Toast.LENGTH_SHORT).show();
-    }
-
-    protected void onNavSettingClick() {
-        // Mặc định: mở SettingsActivity
-        closeDrawer();
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
 
     @Override
