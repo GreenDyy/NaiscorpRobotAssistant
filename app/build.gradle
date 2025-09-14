@@ -40,6 +40,35 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+     packagingOptions {
+        pickFirst 'about.html'
+        pickFirst 'edl-v10.html'
+        pickFirst 'epl-v10.html'
+        pickFirst 'notice.html'
+        pickFirst 'META-INF/legal/LICENSE'
+        pickFirst 'META-INF/legal/NOTICE.md'
+        pickFirst 'META-INF/legal/3rd-party/cc0-legalcode.html'
+        pickFirst 'META-INF/legal/3rd-party/BSD-3-Clause-LICENSE.txt'
+        pickFirst 'META-INF/legal/3rd-party/APACHE-LICENSE-2.0.txt'
+        pickFirst 'META-INF/legal/3rd-party/MIT-license.html'
+        pickFirst 'META-INF/legal/3rd-party/CDDL+GPL-1.1.txt'
+        //
+        pickFirst 'META-INF/services/*'
+        pickFirst 'META-INF/androidx.*'
+        pickFirst 'META-INF/kotlin.*'
+        pickFirst 'META-INF/com.google.android.material*'
+        pickFirst 'META-INF/org.eclipse.paho.*'
+        pickFirst 'META-INF/okhttp3.*'
+        pickFirst 'META-INF/bundle.properties'
+        pickFirst 'META-INF/DebugProbesKt.bin'
+        pickFirst 'kotlin/**'
+        pickFirst 'org/eclipse/paho/**'
+//        pickFirst 'META-INF/com/android/build/gradle/app-metadata.properties'
+        pickFirst 'META-INF/kotlinx_coroutines_android.version'
+        pickFirst 'META-INF/kotlinx_coroutines_core.version'
+         excludes += "META-INF/com/android/build/gradle/app-metadata.properties"
+
+    }
 }
 
 dependencies {
@@ -50,6 +79,40 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.recyclerview
     implementation "com.squareup.okhttp3:okhttp:4.9.3"     //bản này support java nhé, bản mới support kotlin
+
+    //từ SDK ===================================================================================
+      // 对外依赖
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation files('libs/keenonlib-release.aar')
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    
+    // Californium CoAP library cho PeanutSDK
+    implementation 'org.eclipse.californium:californium-core:3.0.0'
+    implementation 'org.eclipse.californium:element-connector:3.0.0'
+
+      // MQTT Client dependencies
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+
+
+    //ko dc thì mở dưới này
+    
+    // 开发调试
+//    api project(":peanut-sdk")
+
+    // implementation 'androidx.appcompat:appcompat:1.2.0'
+    // implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
+    // implementation 'androidx.cardview:cardview:1.0.0'
+    // implementation 'com.google.android.material:material:1.2.1'
+    // implementation 'com.jakewharton:butterknife:10.2.3'
+    // implementation 'com.alibaba:fastjson:1.2.68'
+    // implementation 'com.google.code.gson:gson:2.8.6'
+    // implementation "androidx.multidex:multidex:2.0.1"
+    // implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    // implementation 'com.google.zxing:core:3.4.1'
+    // // 友盟统计SDK
+    // implementation  'com.umeng.umsdk:common:9.4.0'// 必选
+    // implementation  'com.umeng.umsdk:asms:1.2.3'// 必选
 
 
     testImplementation libs.junit

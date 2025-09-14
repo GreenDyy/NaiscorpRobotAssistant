@@ -1,5 +1,5 @@
 // File: PeanutSDKManager.java
-package com.keenon.peanut.sample.util;
+package com.naiscorp.robotapp.utils;
 
 import android.content.Context;
 import android.util.Log;
