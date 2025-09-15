@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +30,9 @@ public class PlayGroundActivity extends BaseActivity {
     private EditText etTargetId, etApproximateTime;
     private Button btnBatteryStatus;
     private Button btnStartNavigation, btnStopNavigation, btnPauseNavigation, btnResumeNavigation, btnGetNavigationStatus;
+    private Button btnClearLog;
+    private TextView tvLogOutput;
+    private ScrollView scrollViewLog;
 
 
     @Override
@@ -62,6 +67,11 @@ public class PlayGroundActivity extends BaseActivity {
         
         // Khởi tạo nút battery
         btnBatteryStatus = findViewById(R.id.btnBatteryStatus);
+        
+        // Khởi tạo log components
+        btnClearLog = findViewById(R.id.btnClearLog);
+        tvLogOutput = findViewById(R.id.tvLogOutput);
+        scrollViewLog = findViewById(R.id.scrollViewLog);
     }
 
     private void initListener() {
@@ -74,6 +84,9 @@ public class PlayGroundActivity extends BaseActivity {
         
         // Battery button
         btnBatteryStatus.setOnClickListener(v -> getBattery());
+        
+        // Log button
+        btnClearLog.setOnClickListener(v -> clearLog());
     }
 
     private void startNavigation() {
@@ -92,6 +105,10 @@ public class PlayGroundActivity extends BaseActivity {
             Log.d(TAG, "=== BẮT ĐẦU NAVIGATION ===");
             Log.d(TAG, "Target ID: " + targetId);
             Log.d(TAG, "Approximate Time: " + approximateTime);
+            
+            addLog("=== BẮT ĐẦU NAVIGATION ===");
+            addLog("Target ID: " + targetId);
+            addLog("Approximate Time: " + approximateTime);
 
             if (PeanutSDK.getInstance() != null && PeanutSDK.getInstance().navigation() != null) {
                 // Sử dụng PeanutSDK API để navigation
@@ -99,6 +116,7 @@ public class PlayGroundActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseResp<String> response) {
                         Log.d(TAG, "Navigation đã bắt đầu thành công, res đây: " + response.getData());
+                        addLog("✅ Navigation đã bắt đầu thành công: " + response.getData());
                     }
 
                     @Override
@@ -109,10 +127,12 @@ public class PlayGroundActivity extends BaseActivity {
                     @Override
                     public void onFail(ApiError error) {
                         Log.e(TAG, "Lỗi navigation - Code: " + error.getCode() + ", Message: " + error.getMsg());
+                        addLog("❌ Lỗi navigation - Code: " + error.getCode() + ", Message: " + error.getMsg());
                     }
                 });
             } else {
                 Log.e(TAG, "PeanutSDK hoặc Navigation component chưa được khởi tạo");
+                addLog("❌ PeanutSDK hoặc Navigation component chưa được khởi tạo");
             }
 
         } catch (NumberFormatException e) {
@@ -126,6 +146,7 @@ public class PlayGroundActivity extends BaseActivity {
 
     private void stopNavigation() {
         Log.d(TAG, "=== DỪNG NAVIGATION ===");
+        addLog("=== DỪNG NAVIGATION ===");
 
         try {
             if (PeanutSDK.getInstance() != null && PeanutSDK.getInstance().navigation() != null) {
@@ -271,20 +292,26 @@ public class PlayGroundActivity extends BaseActivity {
 
     //==BATTERY
     public void getBattery() {
+        addLog("=== KIỂM TRA BATTERY ===");
+        if(PeanutSDK.getInstance() != null && PeanutSDK.getInstance().battery() != null) {
         PeanutSDK.getInstance().battery().batteryInfo(new ApiCallback<BaseResp<BatteryInfoBean>>() {
             @Override
             public void onSuccess(BaseResp<BatteryInfoBean> result) {
                 if (result != null && result.getData() != null) {
                     BatteryInfoBean battery = result.getData();
                     Log.d(TAG, "✅ Battery: " + battery.toString());
+                    addLog("✅ Battery: " + battery.toString());
                     // Thêm thông tin chi tiết nếu có
                     try {
                         Log.d(TAG, "🔋 Battery class: " + battery.getClass().getSimpleName());
+                        addLog("🔋 Battery class: " + battery.getClass().getSimpleName());
                     } catch (Exception e) {
                         Log.d(TAG, "🔋 Battery data received");
+                        addLog("🔋 Battery data received");
                     }
                 } else {
                     Log.d(TAG, "⚠️ No battery data received");
+                    addLog("⚠️ No battery data received");
                 }
             }
 
@@ -296,10 +323,32 @@ public class PlayGroundActivity extends BaseActivity {
             @Override
             public void onFail(ApiError error) {
                 Log.e(TAG, "❌ Battery info failed: " + error.toString());
+                addLog("❌ Battery info failed: " + error.toString());
             }
         });
 
         int powerLevel = PeanutRuntime.getInstance().getRuntimeInfo().getPower();
         Log.d(TAG, "🔋 Runtime Power: " + powerLevel + "%");
+            addLog("🔋 Runtime Power: " + powerLevel + "%");
+        } else {
+            Log.e(TAG, "PeanutSDK hoặc Battery component chưa được khởi tạo");
+            addLog("❌ PeanutSDK hoặc Battery component chưa được khởi tạo");
+        }
+    }
+
+    //=== LOG METHODS ===
+    private void addLog(String message) {
+        runOnUiThread(() -> {
+            String timestamp = java.text.DateFormat.getTimeInstance().format(new java.util.Date());
+            String logMessage = "[" + timestamp + "] " + message + "\n";
+            tvLogOutput.append(logMessage);
+            
+            // Auto scroll to bottom
+            scrollViewLog.post(() -> scrollViewLog.fullScroll(View.FOCUS_DOWN));
+        });
+    }
+
+    private void clearLog() {
+        tvLogOutput.setText("Log đã được xóa...\n");
     }
 }
