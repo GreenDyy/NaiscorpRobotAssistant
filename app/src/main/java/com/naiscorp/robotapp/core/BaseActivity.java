@@ -40,7 +40,6 @@ import com.naiscorp.robotapp.ui.home.HomeActivity;
 import com.naiscorp.robotapp.ui.map.MapActivity;
 import com.naiscorp.robotapp.ui.playground.PlayGroundActivity;
 import com.naiscorp.robotapp.ui.settings.SettingsActivity;
-import com.naiscorp.robotapp.ui.demo.BreadcrumbTestActivity;
 import com.naiscorp.robotapp.utils.AssetUtils;
 import com.naiscorp.robotapp.utils.LanguageUtils;
 import com.naiscorp.robotapp.adapter.LanguageSpinnerAdapter;
@@ -293,9 +292,6 @@ public class BaseActivity extends AppCompatActivity {
                 case "Check-in":
                     intent = new Intent(this, CheckInActivity.class);
                     break;
-                case "Breadcrumb Test":
-                    intent = new Intent(this, BreadcrumbTestActivity.class);
-                    break;
                 default:
                     // Nếu không biết màn hình nào, quay về Home
                     intent = new Intent(this, HomeActivity.class);
@@ -456,16 +452,6 @@ public class BaseActivity extends AppCompatActivity {
                             if (!(BaseActivity.this instanceof PlayGroundActivity)) {
                                 goToScreen("Vùng test");
                                 intent = new Intent(BaseActivity.this, PlayGroundActivity.class);
-                                intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
-                                startActivity(intent);
-                            }
-                            break;
-                        case R.id.nav_breadcrumb_test:
-                            closeDrawer();
-                            // Kiểm tra xem có đang ở BreadcrumbTestActivity không
-                            if (!(BaseActivity.this instanceof BreadcrumbTestActivity)) {
-                                goToScreen("Breadcrumb Test");
-                                intent = new Intent(BaseActivity.this, BreadcrumbTestActivity.class);
                                 intent.putExtra("breadcrumb", getBreadcrumbList().toArray(new String[0]));
                                 startActivity(intent);
                             }

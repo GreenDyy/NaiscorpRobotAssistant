@@ -18,10 +18,5 @@
            android:title="Vùng test"
            android:icon="@drawable/ic_playground"
            />
-       <item
-           android:id="@+id/nav_breadcrumb_test"
-           android:title="Breadcrumb Test"
-           android:icon="@drawable/ic_menu"
-           />
    </group>
 </menu>
