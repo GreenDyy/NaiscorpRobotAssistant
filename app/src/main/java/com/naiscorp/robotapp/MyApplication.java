@@ -36,11 +36,9 @@ public class MyApplication extends Application {
         super.onCreate();
         // Khởi tạo ngôn ngữ
         LanguageUtils.initializeLanguage(this);
-        initSDK();
-        initMqtt();
     }
 
-    private void initSDK() {
+    public void initSDK() {
         PeanutSDKManager.initializeSDK(getApplicationContext(), errorCode -> {
             if (errorCode == com.keenon.sdk.external.PeanutSDK.SDK_INIT_SUCCESS) {
                 Log.d(TAG, "✅ SDK Init Success");
@@ -51,7 +49,7 @@ public class MyApplication extends Application {
         });
     }
 
-    private void initMqtt() {
+    public void initMqtt() {
         mqttHandler = new MqttHandler();
 
         // Callback khi connect thành công hoặc thất bại
