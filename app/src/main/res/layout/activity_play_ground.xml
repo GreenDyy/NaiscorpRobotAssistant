@@ -8,16 +8,15 @@
     android:padding="16dp"
     tools:context=".ui.playground.PlayGroundActivity">
 
-    <!-- Scrollable content -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,26 +36,57 @@
                     android:layout_height="wrap_content"
                     android:text="Test Status Robot" />
 
-                <LinearLayout
+                <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start"
+                    app:alignItems="flex_start"
+                    app:alignContent="flex_start"
+                    android:padding="4dp">
 
                     <Button
-                        android:id="@+id/btnStatus1"
+                        android:id="@+id/btnBatteryStatus"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Status 1" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Check Battery Status"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnStatus2"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Status 2" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Get Nav Status"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnStatus3"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Status 3" />
-                </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status 3"
+                        android:layout_margin="4dp" />
+
+                    <Button
+                        android:id="@+id/btnStatus4"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status 4"
+                        android:layout_margin="4dp" />
+
+                    <Button
+                        android:id="@+id/btnStatus5"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status 5"
+                        android:layout_margin="4dp" />
+
+                </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
 
             <!-- Section: Test Navigation -->
@@ -73,44 +103,63 @@
                     android:layout_height="wrap_content"
                     android:text="Test Navigation Robot" />
 
-                <LinearLayout
+                <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    app:flexWrap="wrap"
+                    app:flexDirection="row"
+                    app:justifyContent="flex_start"
+                    app:alignItems="flex_start"
+                    app:alignContent="flex_start"
+                    android:padding="4dp">
 
                     <EditText
                         android:id="@+id/etTargetId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Target ID" />
+                        android:hint="Target ID"
+                        android:layout_margin="4dp" />
 
                     <EditText
                         android:id="@+id/etApproximateTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Approximate Time" />
+                        android:hint="Approximate Time"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnNavStart"
                         style="@style/ButtonOutlineSmallStyle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nav Start(nhập pointId trước)" />
+                        android:text="Nav Start"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnNavPause"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Nav Pause" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nav Pause"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnNavResume"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Nav Resume" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nav Resume"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnNavStop"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Nav Stop" />
-                </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nav Stop"
+                        android:layout_margin="4dp" />
+                </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
 
             <!-- Section: Test Head Motor -->
@@ -127,28 +176,58 @@
                     android:layout_height="wrap_content"
                     android:text="Test Head Motor Robot" />
 
-                <LinearLayout
+                <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start"
+                    app:alignItems="flex_start"
+                    app:alignContent="flex_start"
+                    android:padding="4dp">
 
                     <Button
                         android:id="@+id/btnHeadUp"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Up" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Up"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnHeadDown"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Down" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Down"
+                        android:layout_margin="4dp" />
 
                     <Button
                         android:id="@+id/btnHeadCenter"
                         style="@style/ButtonOutlineSmallStyle"
-                        android:text="Center" />
-                </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Center"
+                        android:layout_margin="4dp" />
+
+                    <Button
+                        android:id="@+id/btnHeadLeft"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Left"
+                        android:layout_margin="4dp" />
+
+                    <Button
+                        android:id="@+id/btnHeadRight"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Right"
+                        android:layout_margin="4dp" />
+                </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

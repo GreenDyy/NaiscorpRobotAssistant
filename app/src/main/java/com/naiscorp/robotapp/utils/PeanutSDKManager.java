@@ -307,4 +307,5 @@ public class PeanutSDKManager {
             Log.e(TAG, "Lỗi khi giải phóng SDK: " + e.getMessage());
         }
     }
+
 }

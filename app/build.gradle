@@ -79,6 +79,8 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.recyclerview
     implementation "com.squareup.okhttp3:okhttp:4.9.3"     //bản này support java nhé, bản mới support kotlin
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
 
     //từ SDK ===================================================================================
       // 对外依赖

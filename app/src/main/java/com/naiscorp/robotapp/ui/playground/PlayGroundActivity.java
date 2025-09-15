@@ -2,6 +2,8 @@ package com.naiscorp.robotapp.ui.playground;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -11,10 +13,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.keenon.sdk.component.runtime.PeanutRuntime;
 import com.keenon.sdk.external.PeanutSDK;
 import com.keenon.sdk.hedera.model.ApiError;
 import com.keenon.sdk.robot.ApiCallback;
 import com.keenon.sdk.robot.base.BaseResp;
+import com.keenon.sdk.robot.model.bean.battery.BatteryInfoBean;
 import com.keenon.sdk.robot.model.bean.navigation.NavigationStatusBean;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.core.BaseActivity;
@@ -22,6 +26,9 @@ import com.naiscorp.robotapp.core.BaseActivity;
 public class PlayGroundActivity extends BaseActivity {
     private static final String TAG = PlayGroundActivity.class.getSimpleName();
     private EditText etTargetId, etApproximateTime;
+    private Button btnBatteryStatus;
+    private Button btnStartNavigation, btnStopNavigation, btnPauseNavigation, btnResumeNavigation, btnGetNavigationStatus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,9 @@ public class PlayGroundActivity extends BaseActivity {
         setHeaderTitle("Vùng test");
         setSubTitle("Testt");
         showLeftButton();
+
+        initView();
+        initListener();
     }
 
     private void initView() {
@@ -42,6 +52,28 @@ public class PlayGroundActivity extends BaseActivity {
         etApproximateTime = findViewById(R.id.etApproximateTime);
         //default value approximateTimeStr = 1
         etApproximateTime.setText("1");
+        
+        // Khởi tạo các nút navigation
+        btnStartNavigation = findViewById(R.id.btnNavStart);
+        btnStopNavigation = findViewById(R.id.btnNavStop);
+        btnPauseNavigation = findViewById(R.id.btnNavPause);
+        btnResumeNavigation = findViewById(R.id.btnNavResume);
+        btnGetNavigationStatus = findViewById(R.id.btnStatus2); // Sử dụng btnStatus2 cho get navigation status
+        
+        // Khởi tạo nút battery
+        btnBatteryStatus = findViewById(R.id.btnBatteryStatus);
+    }
+
+    private void initListener() {
+        // Navigation buttons
+        btnStartNavigation.setOnClickListener(v -> startNavigation());
+        btnStopNavigation.setOnClickListener(v -> stopNavigation());
+        btnPauseNavigation.setOnClickListener(v -> pauseNavigation());
+        btnResumeNavigation.setOnClickListener(v -> resumeNavigation());
+        btnGetNavigationStatus.setOnClickListener(v -> getNavigationStatus());
+        
+        // Battery button
+        btnBatteryStatus.setOnClickListener(v -> getBattery());
     }
 
     private void startNavigation() {
@@ -235,5 +267,39 @@ public class PlayGroundActivity extends BaseActivity {
             Log.e(TAG, "Exception khi get navigation status: " + e.getMessage());
             Log.e(TAG, "Error getting navigation status", e);
         }
+    }
+
+    //==BATTERY
+    public void getBattery() {
+        PeanutSDK.getInstance().battery().batteryInfo(new ApiCallback<BaseResp<BatteryInfoBean>>() {
+            @Override
+            public void onSuccess(BaseResp<BatteryInfoBean> result) {
+                if (result != null && result.getData() != null) {
+                    BatteryInfoBean battery = result.getData();
+                    Log.d(TAG, "✅ Battery: " + battery.toString());
+                    // Thêm thông tin chi tiết nếu có
+                    try {
+                        Log.d(TAG, "🔋 Battery class: " + battery.getClass().getSimpleName());
+                    } catch (Exception e) {
+                        Log.d(TAG, "🔋 Battery data received");
+                    }
+                } else {
+                    Log.d(TAG, "⚠️ No battery data received");
+                }
+            }
+
+            @Override
+            public void onSuccess(String requestId, BaseResp<BatteryInfoBean> result) {
+                onSuccess(result);
+            }
+
+            @Override
+            public void onFail(ApiError error) {
+                Log.e(TAG, "❌ Battery info failed: " + error.toString());
+            }
+        });
+
+        int powerLevel = PeanutRuntime.getInstance().getRuntimeInfo().getPower();
+        Log.d(TAG, "🔋 Runtime Power: " + powerLevel + "%");
     }
 }
