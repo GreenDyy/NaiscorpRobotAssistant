@@ -11,6 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.keenon.sdk.external.PeanutSDK;
+import com.keenon.sdk.hedera.model.ApiError;
+import com.keenon.sdk.robot.ApiCallback;
+import com.keenon.sdk.robot.base.ApiTopic;
+import com.keenon.sdk.robot.base.BaseResp;
+import com.keenon.sdk.robot.model.bean.sensor.ObjectPerceptionBean;
 import com.naiscorp.robotapp.R;
 import com.naiscorp.robotapp.adapter.HomeCardRecyclerAdapter;
 import com.naiscorp.robotapp.core.BaseActivity;
@@ -24,7 +31,7 @@ import java.util.List;
 
 public class HomeActivity extends BaseActivity {
     private static final String TAG = "HomeActivity";
-
+    private Gson gson = new Gson();
     private RecyclerView recyclerViewCards;
     private HomeCardRecyclerAdapter cardAdapter;
     private List<HomeCard> cardList;
@@ -50,7 +57,7 @@ public class HomeActivity extends BaseActivity {
         initRecyclerView();
         setupCardData();
         setupCardClickListeners();
-        
+
         // Test API
         testApiCall();
     }
@@ -136,13 +143,13 @@ public class HomeActivity extends BaseActivity {
     protected void onBtnLeftClick() {
         //Không làm gì cả
     }
-    
+
     private void testApiCall() {
         Log.d(TAG, "Bắt đầu test API call...");
-        
+
         // Sử dụng JSONPlaceholder API mẫu để test
         String testUrl = "https://jsonplaceholder.typicode.com/posts/1";
-        
+
         ApiHelper.get(testUrl, new ApiHelper.ApiCallback() {
             @Override
             public void onSuccess(String response) {
@@ -161,4 +168,93 @@ public class HomeActivity extends BaseActivity {
             }
         });
     }
+
+    private void setWelcomeSwitch(boolean isOpen) {
+        PeanutSDK.getInstance().runtime().setWelcomeSwitch(new ApiCallback<BaseResp<String>>() {
+            @Override
+            public void onFail(ApiError apiError) {
+                Log.e(TAG, "Lỗi khi thay đổi chế độ chào mừng: " + apiError.toString());
+            }
+
+            @Override
+            public void onSuccess(BaseResp<String> stringBaseResp) {
+                Log.d(TAG, isOpen ? "Mở " : "Tắt " + "Raw Response: " + gson.toJson(stringBaseResp));
+                if (isOpen) {
+                    subscribePerceptionEvent();
+                } else {
+                    unsubscribePerceptionEvent();
+                }
+            }
+
+            @Override
+            public void onSuccess(String topic, BaseResp<String> result) {
+                Log.d(TAG, (isOpen ? "BẬT" : "TẮT") + " chế độ chào mừng thành công! topic=" + topic);
+                if (isOpen) {
+                    subscribePerceptionEvent();
+                } else {
+                    unsubscribePerceptionEvent();
+                }
+            }
+
+            public void onFail(String topic, ApiError error) {
+                Log.d(TAG, "Topic=" + topic + " | Error: " + error.toString());
+            }
+        }, isOpen);
+    }
+
+    private void handleObjectPerception(String data) {
+        try {
+            Log.d(TAG, "Nhận dữ liệu từ sensor: " + data);
+            ObjectPerceptionBean bean = gson.fromJson(data, ObjectPerceptionBean.class);
+            if (bean != null && bean.getObjects() != null && !bean.getObjects().isEmpty()) {
+                Log.d(TAG, "Phát hiện " + bean.getObjects().size() + " đối tượng.");
+
+                for (int i = 0; i < bean.getObjects().size(); i++) {
+                    ObjectPerceptionBean.ObjectsBean obj = bean.getObjects().get(i);
+                    Log.d(TAG, "OBJECT_" + (i + 1) + "Khoảng cách=" + obj.getDistance() + ", X=" + obj.getX() + ", Y=" + obj.getY());
+                }
+            } else {
+                Log.d(TAG, "Không có đối tượng nào được phát hiện.");
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Không thể parse dữ liệu: " + e.getMessage());
+        }
+    }
+
+    private void subscribePerceptionEvent() {
+        Log.d(TAG, "Đang đăng ký lắng nghe sự kiện Object Perception...");
+
+        ApiCallback<String> commonCallback = new ApiCallback<String>() {
+
+            @Override
+            public void onSuccess(String requestId, String result) {
+                // Handle the case when onSuccess is called with requestId and result
+                if (result != null) {
+                    handleObjectPerception(result);
+                }
+            }
+
+            @Override
+            public void onFail(ApiError error) {
+                Log.d(TAG, "Error: " + error.toString());
+            }
+
+            @Override
+            public void onSuccess(String s) {
+
+            }
+        };
+
+//        PeanutSDK.getInstance().subscribe(ApiTopic.OBJECT_PERCEPTION, 1000, commonCallback);
+        PeanutSDK.getInstance().subscribe(ApiTopic.DYNAMIC_OBJECT_PERCEPTION, 1000, commonCallback);
+//        PeanutSDK.getInstance().subscribe(ApiTopic.NAVI_HUMAN_DETECTION_STATUS, 1000, commonCallback);
+    }
+
+    private void unsubscribePerceptionEvent() {
+        Log.d(TAG, "Đang hủy đăng ký lắng nghe sự kiện Object Perception...");
+//        PeanutSDK.getInstance().unSubscribe(ApiTopic.OBJECT_PERCEPTION, null);
+        PeanutSDK.getInstance().unSubscribe(ApiTopic.DYNAMIC_OBJECT_PERCEPTION, null);
+//        PeanutSDK.getInstance().unSubscribe(ApiTopic.NAVI_HUMAN_DETECTION_STATUS, null);
+    }
+
 }

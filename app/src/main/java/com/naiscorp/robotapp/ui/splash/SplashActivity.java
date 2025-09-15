@@ -56,7 +56,10 @@ public class SplashActivity extends AppCompatActivity {
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.READ_PHONE_STATE
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_WIFI_STATE
     };
 
     @Override
@@ -180,6 +183,7 @@ public class SplashActivity extends AppCompatActivity {
             // Init SDK
             MyApplication app = (MyApplication) getApplication();
             app.initSDK();
+
             app.initMqtt();
 
             startActivity(new Intent(this, HomeActivity.class));
