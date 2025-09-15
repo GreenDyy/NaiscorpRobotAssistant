@@ -14,123 +14,141 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-           <!-- Section: Test Status -->
-           <LinearLayout
-               android:id="@+id/sectionStatus"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="vertical">
+            <!-- Section: Test Status -->
+            <LinearLayout
+                android:id="@+id/sectionStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-               <TextView
-                   style="@style/TextAppearance.AppCompat.Title"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Test Status Robot" />
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Status Robot" />
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
-                   <Button
-                       android:id="@+id/btnStatus1"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Status 1" />
+                    <Button
+                        android:id="@+id/btnStatus1"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Status 1" />
 
-                   <Button
-                       android:id="@+id/btnStatus2"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Status 2" />
+                    <Button
+                        android:id="@+id/btnStatus2"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Status 2" />
 
-                   <Button
-                       android:id="@+id/btnStatus3"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Status 3" />
-               </LinearLayout>
-           </LinearLayout>
+                    <Button
+                        android:id="@+id/btnStatus3"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Status 3" />
+                </LinearLayout>
+            </LinearLayout>
 
-           <!-- Section: Test Navigation -->
-           <LinearLayout
-               android:id="@+id/sectionNavigation"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="16dp"
-               android:orientation="vertical">
+            <!-- Section: Test Navigation -->
+            <LinearLayout
+                android:id="@+id/sectionNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
-               <TextView
-                   style="@style/TextAppearance.AppCompat.Title"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Test Navigation Robot" />
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Navigation Robot" />
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
-                   <Button
-                       android:id="@+id/btnNav1"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Nav 1" />
+                    <EditText
+                        android:id="@+id/etTargetId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Target ID" />
 
-                   <Button
-                       android:id="@+id/btnNav2"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Nav 2" />
+                    <EditText
+                        android:id="@+id/etApproximateTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Approximate Time" />
 
-                   <Button
-                       android:id="@+id/btnNav3"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Nav 3" />
-               </LinearLayout>
-           </LinearLayout>
+                    <Button
+                        android:id="@+id/btnNavStart"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:layout_height="wrap_content"
+                        android:text="Nav Start(nhập pointId trước)" />
 
-           <!-- Section: Test Head Motor -->
-           <LinearLayout
-               android:id="@+id/sectionHeadMotor"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="16dp"
-               android:orientation="vertical">
+                    <Button
+                        android:id="@+id/btnNavPause"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Nav Pause" />
 
-               <TextView
-                   style="@style/TextAppearance.AppCompat.Title"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Test Head Motor Robot" />
+                    <Button
+                        android:id="@+id/btnNavResume"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Nav Resume" />
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp">
+                    <Button
+                        android:id="@+id/btnNavStop"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Nav Stop" />
+                </LinearLayout>
+            </LinearLayout>
 
-                   <Button
-                       android:id="@+id/btnHeadUp"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Up" />
+            <!-- Section: Test Head Motor -->
+            <LinearLayout
+                android:id="@+id/sectionHeadMotor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
-                   <Button
-                       android:id="@+id/btnHeadDown"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Down" />
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Head Motor Robot" />
 
-                   <Button
-                       android:id="@+id/btnHeadCenter"
-                       style="@style/ButtonOutlineSmallStyle"
-                       android:text="Center" />
-               </LinearLayout>
-           </LinearLayout>
-       </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <Button
+                        android:id="@+id/btnHeadUp"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Up" />
+
+                    <Button
+                        android:id="@+id/btnHeadDown"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Down" />
+
+                    <Button
+                        android:id="@+id/btnHeadCenter"
+                        style="@style/ButtonOutlineSmallStyle"
+                        android:text="Center" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
