@@ -5,6 +5,132 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.playground.PlayGroundActivity">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+
+           <!-- Section: Test Status -->
+           <LinearLayout
+               android:id="@+id/sectionStatus"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <TextView
+                   style="@style/TextAppearance.AppCompat.Title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Test Status Robot" />
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="8dp">
+
+                   <Button
+                       android:id="@+id/btnStatus1"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Status 1" />
+
+                   <Button
+                       android:id="@+id/btnStatus2"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Status 2" />
+
+                   <Button
+                       android:id="@+id/btnStatus3"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Status 3" />
+               </LinearLayout>
+           </LinearLayout>
+
+           <!-- Section: Test Navigation -->
+           <LinearLayout
+               android:id="@+id/sectionNavigation"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="16dp"
+               android:orientation="vertical">
+
+               <TextView
+                   style="@style/TextAppearance.AppCompat.Title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Test Navigation Robot" />
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="8dp">
+
+                   <Button
+                       android:id="@+id/btnNav1"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Nav 1" />
+
+                   <Button
+                       android:id="@+id/btnNav2"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Nav 2" />
+
+                   <Button
+                       android:id="@+id/btnNav3"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Nav 3" />
+               </LinearLayout>
+           </LinearLayout>
+
+           <!-- Section: Test Head Motor -->
+           <LinearLayout
+               android:id="@+id/sectionHeadMotor"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="16dp"
+               android:orientation="vertical">
+
+               <TextView
+                   style="@style/TextAppearance.AppCompat.Title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Test Head Motor Robot" />
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="8dp">
+
+                   <Button
+                       android:id="@+id/btnHeadUp"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Up" />
+
+                   <Button
+                       android:id="@+id/btnHeadDown"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Down" />
+
+                   <Button
+                       android:id="@+id/btnHeadCenter"
+                       style="@style/ButtonOutlineSmallStyle"
+                       android:text="Center" />
+               </LinearLayout>
+           </LinearLayout>
+       </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

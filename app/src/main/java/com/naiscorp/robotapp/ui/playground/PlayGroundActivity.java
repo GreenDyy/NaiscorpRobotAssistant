@@ -25,6 +25,5 @@ public class PlayGroundActivity extends BaseActivity {
         setHeaderTitle("Vùng test");
         setSubTitle("Testt");
         showLeftButton();
-        showRightButton();
     }
 }
